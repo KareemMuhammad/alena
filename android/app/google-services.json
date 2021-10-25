@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "603029562389",
+    "project_id": "alena-ed5f1",
+    "storage_bucket": "alena-ed5f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603029562389:android:647dbe3351fef0bbc51a1c",
+        "android_client_info": {
+          "package_name": "com.outofthebox.alena"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603029562389-1pscjdduad4l722g8se03jmt332pquu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBResSuinTXuOl1iTz7SWsnAXJahZogXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603029562389-1pscjdduad4l722g8se03jmt332pquu6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
