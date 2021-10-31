@@ -75,9 +75,9 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Icon(Icons.arrow_back_ios,color: white,size: 20,),
             SizedBox(width: 10,),
-            Text(info,style: TextStyle(color: white,fontSize: 17,),),
+            Flexible(child: Text(info,style: TextStyle(color: white,fontSize: 17,),)),
             Spacer(),
-            Text(title,style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),),
+            Text(title,style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
           ],
         ),
       ),

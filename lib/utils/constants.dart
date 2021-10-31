@@ -55,6 +55,8 @@ class Utils{
   /////////////////////////////////////////////////////////////// constants //////////////////////////////////////////////////////////////
   static const String SHARED_KEY = "tipsKey";
 
+  static const String SHOWCASE_KEY = "showcaseKey";
+
   static const String SHARED_SELECTED_CATEGORIES_KEY = "selectedCategoriesKey";
 
   static const String SHARED_SELECTED_INDEXES_KEY = "selectedIndexesKey";

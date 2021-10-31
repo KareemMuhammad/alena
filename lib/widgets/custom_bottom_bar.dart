@@ -33,7 +33,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   @override
   void initState() {
     super.initState();
-    if(!sharedPref.getBool(Utils.SHARED_KEY)) {
+    if(sharedPref.getBool(Utils.SHOWCASE_KEY) == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) =>
           ShowCaseWidget.of(context).startShowCase([_one, _two]));
     }
@@ -55,10 +55,14 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return  SlidingUpPanel(
+    return SlidingUpPanel(
               controller: widget.panelController,
               panel: Showcase(
                   key: _two,
+                  disposeOnTap: true,
+                  onTargetClick: (){
+                    sharedPref.setBool(Utils.SHOWCASE_KEY, true);
+                  },
                   description: 'هنا هتلاقى القائمة الى اختارتيها من الاقسام',
                   textColor: button,
                   descTextStyle: TextStyle(color: button,fontSize: 20,letterSpacing: 1,fontFamily: 'AA-GALAXY'),

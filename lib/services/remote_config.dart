@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:alena/main.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/services.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
-const String _BOOLEAN_VALUE = "allow_update";
+const String _ANDROID_VALUE = "requiredBuildNumberAndroid";
+const String _IOS_VALUE = "requiredBuildNumberIOS";
 
 class RemoteConfigService {
   final RemoteConfig _remoteConfig;
@@ -13,7 +12,8 @@ class RemoteConfigService {
       : _remoteConfig = remoteConfig;
 
   final defaults = <String, dynamic>{
-    _BOOLEAN_VALUE: false,
+    _ANDROID_VALUE: 1,
+    _IOS_VALUE: 1
   };
 
   static RemoteConfigService _instance;
@@ -25,8 +25,6 @@ class RemoteConfigService {
     }
     return _instance;
   }
-
-  bool get getBoolValue => _remoteConfig.getBool(_BOOLEAN_VALUE);
 
   Future initialize() async {
     try {
@@ -45,18 +43,16 @@ class RemoteConfigService {
       minimumFetchInterval: const Duration(hours: 1),
     ));
     await _remoteConfig.fetchAndActivate();
-    print("boolean::: $getBoolValue");
   }
 
   bool checkUpdates() {
-    final requiredBuildNumber = _remoteConfig.getInt(Platform.isAndroid
-        ? 'requiredBuildNumberAndroid'
-        : 'requiredBuildNumberIOS');
+    final requiredBuildNumber = _remoteConfig.getString(Platform.isAndroid ? _ANDROID_VALUE : _IOS_VALUE);
 
     final currentBuildNumber = int.parse(packageInfo.buildNumber);
     print("build no $currentBuildNumber");
+    print("required no $requiredBuildNumber");
 
-    return currentBuildNumber < requiredBuildNumber;
+    return currentBuildNumber < int.parse(requiredBuildNumber);
   }
 
 }
