@@ -67,8 +67,8 @@ class _SignInAlenaState extends State<SignInAlena> {
        crossAxisAlignment: CrossAxisAlignment.center,
        mainAxisAlignment: MainAxisAlignment.center,
        children: [
-         const SizedBox(height: 100,),
-         Text('تسجيل الدخول',style: TextStyle(fontSize: 30,color: black,
+         const SizedBox(height: 80,),
+         Text('علينا',style: TextStyle(fontSize: 50,color: button,
              fontFamily: 'AA-GALAXY'),),
          const SizedBox(height: 40,),
          Form(
@@ -110,7 +110,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                },
                child: Padding(
                  padding: EdgeInsets.symmetric(horizontal: 18,vertical: 5),
-                 child: Text('نسيت كلمة المرور',style: TextStyle(color: black,fontSize: 19,
+                 child: Text('نسيت كلمة المرور',style: TextStyle(color: black,fontSize: 18,fontFamily: 'AA-GALAXY',
                      decoration: TextDecoration.underline),),
                )
            ),
@@ -118,9 +118,9 @@ class _SignInAlenaState extends State<SignInAlena> {
          Text(userNotFound, style: TextStyle(color: Colors.red[700], fontSize: 17.0),),
          const SizedBox(height: 30,),
          Padding(
-           padding: EdgeInsets.symmetric(horizontal: 30,vertical: 1),
+           padding: EdgeInsets.symmetric(horizontal: 120,vertical: 1),
            child: Material(
-             borderRadius: BorderRadius.circular(10.0),
+             borderRadius: BorderRadius.circular(20.0),
              color: button,
              elevation: 2,
              child: MaterialButton(
@@ -130,8 +130,13 @@ class _SignInAlenaState extends State<SignInAlena> {
                    BlocProvider.of<UserCubit>(context).signInEmailAndPassword(emailController.text, passwordController.text);
                  }
                },
-               child: Text('دخول',style: TextStyle(fontSize: 22,color: white,
-                   fontFamily: 'AA-GALAXY'),),
+               child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   Image.asset('assets/6.png',height: SizeConfig.screenHeight * 0.09,width: SizeConfig.screenWidth * 0.09,),
+                   Text('دخول',style: TextStyle(fontSize: 25,color: white,
+                       fontFamily: 'AA-GALAXY'),),
+                 ],
+               ),
              ),
            ),
          ),
@@ -145,7 +150,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                  onTap: ()async{
                    BlocProvider.of<UserCubit>(context).signUpGoogle();
                  },
-                 child:Image.asset('assets/google.png',height: 50,width: 50,)
+                 child:Image.asset('assets/google.png',height: 40,width: 40,)
              ),
              const SizedBox(width: 15,),
              Padding(
@@ -158,7 +163,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                  onTap: ()async{
                    BlocProvider.of<UserCubit>(context).signUpFacebook();
                  },
-                 child: Image.asset('assets/facebook.png',height: 50,width: 50,)
+                 child: Image.asset('assets/facebook.png',height: 40,width: 40,)
              ),
            ],
          ),
@@ -194,8 +199,8 @@ class _SignInAlenaState extends State<SignInAlena> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 100,),
-          Text('تسجيل الدخول',style: TextStyle(fontSize: 30,color: black,
+          const SizedBox(height: 80,),
+          Text('علينا',style: TextStyle(fontSize: 50,color: button,
               fontFamily: 'AA-GALAXY'),),
           const SizedBox(height: 40,),
           Form(
@@ -237,16 +242,16 @@ class _SignInAlenaState extends State<SignInAlena> {
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 18,vertical: 5),
-                  child: Text('نسيت كلمة المرور',style: TextStyle(color: black,fontSize: 19,
+                  child: Text('نسيت كلمة المرور',style: TextStyle(color: black,fontSize: 18,fontFamily: 'AA-GALAXY',
                       decoration: TextDecoration.underline),),
                 )
             ),
           ),
           const SizedBox(height: 30,),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30,vertical: 1),
+            padding: EdgeInsets.symmetric(horizontal: 120,vertical: 1),
             child: Material(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(20.0),
               color: button,
               elevation: 2,
               child: MaterialButton(
@@ -256,8 +261,13 @@ class _SignInAlenaState extends State<SignInAlena> {
                     BlocProvider.of<UserCubit>(context).signInEmailAndPassword(emailController.text, passwordController.text);
                   }
                 },
-                child: Text('دخول',style: TextStyle(fontSize: 22,color: white,
-                    fontFamily: 'AA-GALAXY'),),
+                child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/6.png',height: SizeConfig.screenHeight * 0.09,width: SizeConfig.screenWidth * 0.09,),
+                    Text('دخول',style: TextStyle(fontSize: 25,color: white,
+                        fontFamily: 'AA-GALAXY'),),
+                  ],
+                ),
               ),
             ),
           ),
@@ -271,7 +281,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                   onTap: ()async{
                     BlocProvider.of<UserCubit>(context).signUpGoogle();
                   },
-                  child:Image.asset('assets/google.png',height: 50,width: 50,)
+                  child:Image.asset('assets/google.png',height: 40,width: 40,)
               ),
               const SizedBox(width: 15,),
               Padding(
@@ -284,7 +294,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                   onTap: ()async{
                     BlocProvider.of<UserCubit>(context).signUpFacebook();
                   },
-                  child: Image.asset('assets/facebook.png',height: 50,width: 50,)
+                  child: Image.asset('assets/facebook.png',height: 40,width: 40,)
               ),
             ],
           ),

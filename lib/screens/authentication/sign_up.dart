@@ -130,28 +130,6 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: DropdownButtonFormField(
-                        value: _gender,
-                        style: TextStyle(),
-                        decoration: textInputDecoration2(''),
-                        items: genderList.map((sugar) {
-                          return DropdownMenuItem(
-                            value: sugar,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text('$sugar',style: TextStyle(color: button,fontSize: 19
-                                  ,fontFamily: 'AA-GALAXY'),textDirection: TextDirection.rtl,),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (val) => setState(() => _gender = val ),
-                      ),
-                    ),
-                  ),
 
                 ],
               )
@@ -260,29 +238,6 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: DropdownButtonFormField(
-                        value: _gender,
-                        style: TextStyle(),
-                        decoration: textInputDecoration2(''),
-                        items: genderList.map((sugar) {
-                          return DropdownMenuItem(
-                            value: sugar,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text('$sugar',style: TextStyle(color: button,fontSize: 19
-                                  ,fontFamily: 'AA-GALAXY'),textDirection: TextDirection.rtl,),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (val) => setState(() => _gender = val ),
-                      ),
-                    ),
-                  ),
-
                 ],
               )
           ),

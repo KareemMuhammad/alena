@@ -23,7 +23,7 @@ InputDecoration textInputDecorationSign(String hintText,IconData iconData){
     fillColor: white,
     hintTextDirection: TextDirection.rtl,
     hintText: hintText,
-    hintStyle: TextStyle(fontSize: 20,color: button,fontFamily: 'AA-GALAXY'),
+    hintStyle: TextStyle(fontSize: 18,color: button,fontFamily: 'AA-GALAXY'),
     border: InputBorder.none,
     errorStyle: TextStyle(color: Colors.grey[700],fontSize: 16),
     contentPadding: EdgeInsets.all(8),

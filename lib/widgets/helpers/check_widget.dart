@@ -1,6 +1,7 @@
 import 'package:alena/database/blocs/menu_bloc/menu_cubit.dart';
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
 import 'package:alena/screens/categories/main_categories.dart';
+import 'package:alena/screens/navigation/nominations_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,8 +84,18 @@ class _CheckWidgetState extends State<CheckWidget> {
                 alignment: Alignment.centerRight,
                 width: SizeConfig.screenWidth * 0.6,
                 child: Slidable(
-                  actionPane: SlidableDrawerActionPane(),
+                  actionPane: SlidableBehindActionPane(),
                   actionExtentRatio: 0.25,
+                  actions: <Widget>[
+                    IconSlideAction(
+                      caption: 'الترشيحات',
+                      color: button,
+                      icon: Icons.all_inclusive,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => NominationScreen(title: key,)));
+                      },
+                    ),
+                  ],
                   secondaryActions: <Widget>[
                     IconSlideAction(
                       caption: 'حذف',
@@ -137,7 +148,7 @@ class _CheckWidgetState extends State<CheckWidget> {
 
              Padding(
                padding: const EdgeInsets.all(5.0),
-               child: Center(child: Text('اسحبى العنصر للشمال لو عايزة تحذفى', style: TextStyle(fontSize: 17, color: container, fontFamily: 'AA-GALAXY'),)),
+               child: Center(child: Text('اسحبى العنصر للشمال للحذف او لليمين للترشيحات', style: TextStyle(fontSize: 17, color: container, fontFamily: 'AA-GALAXY'),)),
              ),
              const SizedBox(height: 8,)
           ]
