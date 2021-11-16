@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
            return SingleChildScrollView(
              child: Column(
                 children: [
-                  SizedBox(height: 40,),
+                  const SizedBox(height: 40,),
                   _customWidget('الاسم', appUser.name,0,appUser),
                   _customWidget('البريد الالكترونى', appUser.email,1,appUser),
                 ],
@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 40,),
+                  const SizedBox(height: 40,),
                   _customWidget('الاسم', state.appUser.name,0,state.appUser),
                   _customWidget('البريد الالكترونى', state.appUser.email,1,state.appUser),
                 ],
@@ -74,9 +74,10 @@ class ProfileScreen extends StatelessWidget {
         child: Row(
           children: [
             Icon(Icons.arrow_back_ios,color: white,size: 20,),
-            SizedBox(width: 10,),
-            Flexible(child: Text(info,style: TextStyle(color: white,fontSize: 17,),)),
-            Spacer(),
+            const SizedBox(width: 10,),
+            Expanded(child: Text(info,style: TextStyle(color: white,fontSize: 17,),
+              maxLines: 1,overflow: TextOverflow.ellipsis,)),
+            const Spacer(),
             Text(title,style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
           ],
         ),

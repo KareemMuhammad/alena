@@ -68,8 +68,14 @@ class _SignInAlenaState extends State<SignInAlena> {
        mainAxisAlignment: MainAxisAlignment.center,
        children: [
          const SizedBox(height: 80,),
-         Text('علينا',style: TextStyle(fontSize: 50,color: button,
-             fontFamily: 'AA-GALAXY'),),
+         CircleAvatar(
+           radius: 55,
+           backgroundColor: button,
+           child: Center(
+             child: Text('علينا',style: TextStyle(fontSize: 50,color: white,
+                 fontFamily: 'AA-GALAXY'),),
+           ),
+         ),
          const SizedBox(height: 40,),
          Form(
              key: formKey,
@@ -200,8 +206,14 @@ class _SignInAlenaState extends State<SignInAlena> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 80,),
-          Text('علينا',style: TextStyle(fontSize: 50,color: button,
-              fontFamily: 'AA-GALAXY'),),
+          CircleAvatar(
+            radius: 55,
+            backgroundColor: button,
+            child: Center(
+              child: Text('علينا',style: TextStyle(fontSize: 50,color: white,
+                  fontFamily: 'AA-GALAXY'),),
+            ),
+          ),
           const SizedBox(height: 40,),
           Form(
               key: formKey,

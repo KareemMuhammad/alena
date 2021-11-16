@@ -6,6 +6,7 @@ import 'package:alena/widgets/helpers/love_animation.dart';
 import 'package:alena/widgets/helpers/shared_widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
+import '../../main.dart';
 import '../categories/main_categories.dart';
 import 'wedding_time.dart';
 import '../../widgets/dialogs/edit_wedding_dialog.dart';
@@ -67,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                           return Row(mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               LoveAnimation(),
-                              SizedBox(width: 10,),
+                              const SizedBox(width: 10,),
                               Container(
                                 padding: EdgeInsets.all(8),
                                 child: Text('مبروك',style: TextStyle(fontSize: 35,color: button,fontFamily: 'AA-GALAXY'),textAlign: TextAlign.center,),
@@ -77,24 +78,14 @@ class _MainScreenState extends State<MainScreen> {
                         }
                         return Row(mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            buttonLayout('${time.days ?? ''}'),
-                            buttonLayout('${time.hours ?? ''}'),
-                            buttonLayout('${time.min ?? ''}'),
-                            buttonLayout('${time.sec ?? ''}'),
+                            buttonLayout('${time.days ?? ''}','يوم'),
+                            buttonLayout('${time.hours ?? ''}','ساعة'),
+                            buttonLayout('${time.min ?? ''}','دقيقة'),
+                            buttonLayout('${time.sec ?? ''}','ثانية'),
                           ],
                         );
                       },
                       endTime: Utils.dateDifference(state.appUser.weddingDate.split(' ')[0], state.appUser.weddingDate.split(' ')[1]),
-                      endWidget: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LoveAnimation(),
-                          const SizedBox(width: 10,),
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: Text('مبروك',style: TextStyle(fontSize: 17,color: button),textAlign: TextAlign.center,),
-                          ),
-                        ],
-                      ),
                       textStyle: TextStyle(color: button,fontSize: 22,fontFamily: 'AA-GALAXY'),
                     ),
                   ),
@@ -169,6 +160,9 @@ class _MainScreenState extends State<MainScreen> {
                           navigatorKey.currentState.push(
                               MaterialPageRoute(builder: (_) => MainCategories()));
                         }
+                        if(sharedPref.getBool(Utils.SHOWCASE_KEY) == null) {
+                          sharedPref.setBool(Utils.SHOWCASE_KEY, true);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -222,24 +216,14 @@ class _MainScreenState extends State<MainScreen> {
                         }
                         return Row(mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            buttonLayout('${time.days ?? ''}'),
-                            buttonLayout('${time.hours ?? ''}'),
-                            buttonLayout('${time.min ?? ''}'),
-                            buttonLayout('${time.sec ?? ''}'),
+                            buttonLayout('${time.days ?? ''}','يوم'),
+                            buttonLayout('${time.hours ?? ''}','ساعة'),
+                            buttonLayout('${time.min ?? ''}','دقيقة'),
+                            buttonLayout('${time.sec ?? ''}','ثانية'),
                           ],
                         );
                       },
                       endTime: date,
-                      endWidget: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LoveAnimation(),
-                          SizedBox(width: 10,),
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: Text('مبروك',style: TextStyle(fontSize: 17,color: button),textAlign: TextAlign.center,),
-                          ),
-                        ],
-                      ),
                       textStyle: TextStyle(color: button,fontSize: 22,fontFamily: 'AA-GALAXY'),
                     ),
                   ),
@@ -336,7 +320,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget buttonLayout(String text){
+  Widget buttonLayout(String text,String day){
     return text == null || text.isEmpty ?
    const SizedBox():
     Flexible(
@@ -355,8 +339,14 @@ class _MainScreenState extends State<MainScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
-                  child: Text('$text',style: TextStyle(fontSize: 22,color: button,fontFamily: 'AA-GALAXY'),
-                    textAlign: TextAlign.center,),
+                  child: Column(
+                    children: [
+                      Text('$text',style: TextStyle(fontSize: 22,color: button,fontFamily: 'AA-GALAXY'),
+                        textAlign: TextAlign.center,),
+                      Text('$day',style: TextStyle(fontSize: 16,color: button,fontFamily: 'AA-GALAXY'),
+                        textAlign: TextAlign.center,),
+                    ],
+                  ),
                 ),
               ),
             ),

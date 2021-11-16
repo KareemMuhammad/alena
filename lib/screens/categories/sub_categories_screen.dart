@@ -70,62 +70,9 @@ class _SubCategoriesState extends State<SubCategories> {
               ),
             ),
           ),
-          SafeArea(
-            child: Align(
-              alignment: Alignment.topRight,
-              child: BlocConsumer<MenuCubit,MenuState>(
-                builder: (BuildContext context, MenuState state){
-                  return state is MenuLoading ?
-                  SpinKitFadingCircle(color: button,size: 35,)
-                  : IconButton(
-                    color: widget.index == 0 ? white : black,
-                    iconSize: 35,
-                    icon: Icon(Icons.add_circle),
-                    onPressed: (){
-                      if(values.isNotEmpty) {
-                        _saveMyMainList(menuCubit);
-                      }else{
-                        Utils.showToast('القائمة فارغة!');
-                      }
-                    },
-                  );
-                  },
-                listener: (BuildContext context, MenuState state) {
-                  if(state is MenuAdded){
-                    menuCubit.loadUserMenu();
-                    Utils.showToast('تم حفظ القائمة');
-                  }else if(state is MenuAddError){
-                    Utils.showToast('حدث خطأ فى حفظ القائمة!');
-                  }else if(state is MenuExisted){
-                     dynamic result = showDialog(context: context, builder: (_){
-                      return new BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Dialog(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                            backgroundColor: white,
-                            child: new CheckMenuDialog(menuCubit: menuCubit,category: widget.category,categories: _selectedCategories,userCubit: userCubit,),
-                          )
-                      );
-                    });
-                     if(result != 'done'){
-                       menuCubit.loadUserMenu();
-                     }
-                  }else if(state is MenuDeleted){
-                    menuCubit.addMenu(values, widget.category);
-                    _savePreferences();
-                  }else if(state is MenuDeleteError){
-                    Utils.showToast('حدث خطأ فى حذف القائمة!');
-                  }else if(state is MenuNotExisted){
-                    menuCubit.addMenu(values, widget.category);
-                    _savePreferences();
-                  }
-                },
-              ),
-            ),
-          ),
           Positioned(
             bottom: 100,
-            child: _blurContainer(),
+            child: _blurContainer(menuCubit,userCubit),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -136,7 +83,7 @@ class _SubCategoriesState extends State<SubCategories> {
     );
   }
 
-  Widget _blurContainer() {
+  Widget _blurContainer(MenuCubit menuCubit,UserCubit userCubit) {
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
@@ -165,6 +112,59 @@ class _SubCategoriesState extends State<SubCategories> {
                         }).toList(),
                       ],
                     ),
+                  ),
+
+                  BlocConsumer<MenuCubit,MenuState>(
+                    builder: (BuildContext context, MenuState state){
+                      return state is MenuLoading ?
+                      SpinKitFadingCircle(color: button,size: 45,)
+                          : CircleAvatar(
+                            radius: 28,
+                            backgroundColor: button,
+                            child: IconButton(
+                                color: white,
+                                iconSize: 35,
+                                icon: Icon(Icons.add),
+                               onPressed: (){
+                                if(values.isNotEmpty) {
+                                  _saveMyMainList(menuCubit);
+                                }else{
+                                  Utils.showToast('القائمة فارغة!');
+                                }
+                        },
+                      ),
+                          );
+                    },
+                    listener: (BuildContext context, MenuState state) {
+                      if(state is MenuAdded){
+                        menuCubit.loadUserMenu();
+                        Utils.showToast('تم حفظ القائمة');
+                      }else if(state is MenuAddError){
+                        Utils.showToast('حدث خطأ فى حفظ القائمة!');
+                      }else if(state is MenuExisted){
+                        dynamic result = showDialog(context: context, builder: (_){
+                          return new BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Dialog(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                                backgroundColor: white,
+                                child: new CheckMenuDialog(menuCubit: menuCubit,category: widget.category,categories: _selectedCategories,userCubit: userCubit,),
+                              )
+                          );
+                        });
+                        if(result != 'done'){
+                          menuCubit.loadUserMenu();
+                        }
+                      }else if(state is MenuDeleted){
+                        menuCubit.addMenu(values, widget.category);
+                        _savePreferences();
+                      }else if(state is MenuDeleteError){
+                        Utils.showToast('حدث خطأ فى حذف القائمة!');
+                      }else if(state is MenuNotExisted){
+                        menuCubit.addMenu(values, widget.category);
+                        _savePreferences();
+                      }
+                    },
                   ),
 
                 ],

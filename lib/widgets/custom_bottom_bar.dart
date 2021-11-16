@@ -25,8 +25,8 @@ class CustomBottomBar extends StatefulWidget {
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
   final BorderRadiusGeometry radius = BorderRadius.only(
-    topLeft: Radius.circular(24.0),
-    topRight: Radius.circular(24.0),);
+    topLeft: Radius.circular(30.0),
+    topRight: Radius.circular(30.0),);
   GlobalKey _one = GlobalKey();
   GlobalKey _two = GlobalKey();
 
@@ -59,12 +59,11 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               controller: widget.panelController,
               panel: Showcase(
                   key: _two,
-                  disposeOnTap: true,
-                  onTargetClick: (){
-                    sharedPref.setBool(Utils.SHOWCASE_KEY, true);
-                  },
                   description: 'هنا هتلاقى القائمة الى اختارتيها من الاقسام',
                   textColor: button,
+                  onToolTipClick: (){
+                    sharedPref.setBool(Utils.SHOWCASE_KEY, true);
+                  },
                   descTextStyle: TextStyle(color: button,fontSize: 20,letterSpacing: 1,fontFamily: 'AA-GALAXY'),
                   shapeBorder: CircleBorder(),
                   overlayPadding: EdgeInsets.all(10),
@@ -79,12 +78,15 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                  child: InkWell(
                   onTap: (){
                     widget.panelController.open();
+                    if(sharedPref.getBool(Utils.SHOWCASE_KEY) == null) {
+                      sharedPref.setBool(Utils.SHOWCASE_KEY, true);
+                    }
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                    children: [
-                    SizedBox(height: 8,),
+                    const SizedBox(height: 8,),
                     Text('عليا',style: TextStyle(fontSize: 40,color: white,fontFamily: 'AA-GALAXY')
                       ,textAlign: TextAlign.center,),
                     Image.asset('assets/arrow-up.png',height: 25,width: 25,),

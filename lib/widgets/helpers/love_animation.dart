@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../utils/shared.dart';
 
 class LoveAnimation extends StatefulWidget {
@@ -17,7 +16,7 @@ class _LoveAnimationState extends State<LoveAnimation> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+    controller = new AnimationController(
         duration: Duration(milliseconds: 900),
         vsync: this
     );

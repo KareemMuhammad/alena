@@ -45,7 +45,15 @@ class _SignUpAlenaState extends State<SignUpAlena> {
             elevation: 0,
             centerTitle: true,
             backgroundColor: bar,
-            title: Text('سجل مستخدم جديد',style: TextStyle(fontSize: 30,color: black,
+            leading: IconButton(
+              color: black,
+              iconSize: 25,
+              icon: Icon(Icons.arrow_back),
+              onPressed: (){
+                BlocProvider.of<AuthCubit>(context).emit(AuthFailure());
+              },
+            ),
+            title: Text('سجل مستخدم جديد',style: TextStyle(fontSize: 25,color: black,
                 fontFamily: 'AA-GALAXY'),),
           ),
           backgroundColor: Colors.transparent,
