@@ -64,4 +64,20 @@ class UserRepository{
     await _usersCollection.doc(id).update({AppUser.DONE_LIST: FieldValue.arrayRemove([done])});
   }
 
+  Future updateUserFavList(String done,String id)async{
+    await _usersCollection.doc(id).update({AppUser.FAVORITES_LIST: FieldValue.arrayUnion([done])});
+  }
+
+  Future removeFromUserFavList(String done,String id)async{
+    await _usersCollection.doc(id).update({AppUser.FAVORITES_LIST: FieldValue.arrayRemove([done])});
+  }
+
+  Future updateUserAdditionalList(String done,String id)async{
+    await _usersCollection.doc(id).update({AppUser.ADDITIONAL_LIST: FieldValue.arrayUnion([done])});
+  }
+
+  Future removeFromUserAdditionalList(String done,String id)async{
+    await _usersCollection.doc(id).update({AppUser.ADDITIONAL_LIST: FieldValue.arrayRemove([done])});
+  }
+
 }

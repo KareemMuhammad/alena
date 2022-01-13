@@ -20,6 +20,7 @@ class ExtendedHouseWidget extends StatefulWidget {
 class _ExtendedHouseWidgetState extends State<ExtendedHouseWidget> {
   bool isCollapse = false;
   bool isCollapseExtend = false;
+  List<Menu> _dummyMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class _ExtendedHouseWidgetState extends State<ExtendedHouseWidget> {
                   builder: (BuildContext context, state) {
                     if(state is MenuDeleteError){
                       return Center(child: Text('حدث خطأ فى حذف البيانات!', style: TextStyle(
-                          fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                          fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                         textAlign: TextAlign.center,),);
                     }
                     if(state is MenuExisted){
@@ -78,18 +79,26 @@ class _ExtendedHouseWidgetState extends State<ExtendedHouseWidget> {
                       return Center(child: SpinKitCircle(color: button,size: 35,),);
                     }
                     if(state is MenuLoaded){
+                      _dummyMenu = state.menu;
                       return Row(mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CheckWidget(values: getSingleMenu(device, state.menu).list,
-                                menuId: getSingleMenu(device, state.menu).id,menuCategory: device,),
-                            ],
-                          );
+                        children: [
+                          CheckWidget(values: getSingleMenu(device, state.menu).list ?? {},
+                            menuId: getSingleMenu(device, state.menu).id ?? '',menuCategory: device,),
+                        ],);
                     }else if(state is MenuLoading){
-                      return Center(child: SpinKitCircle(color: button,size: 35,),);
+                      return _dummyMenu == null ? Center(child: SpinKitCircle(color: button,size: 35,),):
+                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CheckWidget(values: getSingleMenu(widget.category, _dummyMenu).list,
+                            menuId: getSingleMenu(widget.category, _dummyMenu).id,menuCategory: widget.category,),
+                        ],
+                      );
                     }else if(state is MenuLoadError){
                       return Center(child: Text('حدث خطأ فى تحميل البيانات!', style: TextStyle(
-                          fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                          fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                         textAlign: TextAlign.center,),);
+                    }else{
+                      return const SizedBox();
                     }
                   },
                 ),

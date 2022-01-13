@@ -10,6 +10,8 @@ class AppUser{
   static const String TOKEN = "token";
   static const String WEDDING_DATE = "weddingDate";
   static const String DONE_LIST = "doneList";
+  static const String ADDITIONAL_LIST = "additionalList";
+  static const String FAVORITES_LIST = "favoritesList";
 
    String id;
    String name;
@@ -19,6 +21,8 @@ class AppUser{
    String weddingDate;
    String token;
    List<dynamic> doneList;
+   List<dynamic> additionalList;
+   List<dynamic> favorites;
 
   AppUser({
       this.id,
@@ -28,7 +32,9 @@ class AppUser{
       this.gender,
       this.weddingDate,
       this.token,
-      this.doneList});
+      this.doneList,
+      this.additionalList,
+      this.favorites});
 
   Map<String,dynamic> toMap()=>{
     ID : id ??'',
@@ -38,7 +44,9 @@ class AppUser{
     GENDER : gender ??'',
     TOKEN : token ?? '',
     WEDDING_DATE : weddingDate ?? '',
-    DONE_LIST : doneList ?? [],
+    DONE_LIST : doneList.map((e) => e.toString()).toList() ?? [],
+    ADDITIONAL_LIST : additionalList.map((e) => e.toString()).toList() ?? [],
+    FAVORITES_LIST : favorites.map((e) => e.toString()).toList() ?? [],
   };
 
   AppUser.fromSnapshot(DocumentSnapshot doc){
@@ -50,6 +58,8 @@ class AppUser{
     token = (doc.data() as Map)[TOKEN] ?? '';
     weddingDate = (doc.data() as Map)[WEDDING_DATE] ?? '';
     doneList = (doc.data() as Map)[DONE_LIST] ?? [];
+    additionalList = (doc.data() as Map)[ADDITIONAL_LIST] ?? [];
+    favorites = (doc.data() as Map)[FAVORITES_LIST] ?? [];
   }
 
 }

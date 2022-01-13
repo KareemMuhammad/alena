@@ -35,7 +35,9 @@ const Color white = Colors.white;
 const Color black = Colors.black;
 
 const String USERS_COLLECTION = "Users";
+const String FAVORITES_COLLECTION = "Favorites";
 const String MENUS_COLLECTION = "Menus";
+const String ADDITIONAL_MENUS_COLLECTION = "Additional Menus";
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
 const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

@@ -1,19 +1,19 @@
-import 'dart:ui';
-import 'package:alena/database/auth_bloc/auth_cubit.dart';
-import 'package:alena/database/blocs/reg_bloc/reg_cubit.dart';
-import 'package:alena/database/blocs/reg_bloc/reg_state.dart';
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
-import 'package:alena/database/blocs/user_bloc/user_state.dart';
 import 'package:alena/main.dart';
 import 'package:alena/models/user.dart';
-import 'package:alena/screens/navigation/devices_screen.dart';
-import 'package:alena/screens/navigation/profile_screen.dart';
+import 'package:alena/screens/categories/main_categories.dart';
+import 'package:alena/screens/navigation/bar/favorites_screen.dart';
+import 'package:alena/utils/constants.dart';
+import 'package:alena/widgets/helpers/categories_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'bar/devices_screen.dart';
+import 'bar/profile_screen.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../widgets/helpers/shared_widgets.dart';
 import 'package:alena/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utils/shared.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +27,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PanelController panelController = PanelController();
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<UserCubit>(context).loadUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: ListTile(
-                      leading: Icon(Icons.favorite,size: 25,color: button,),
+                      leading: Icon(Icons.widgets,size: 25,color: button,),
                       title: Text('جهازى', style: TextStyle(
                           fontSize: 20,
                           color: button,
@@ -88,17 +94,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: ListTile(
-                      leading: Icon(Icons.logout,size: 25,color: button,),
-                      title: Text('تسجيل خروج', style: TextStyle(
+                      leading: Icon(Icons.favorite,size: 25,color: button,),
+                      title: Text('الأجهزة المفضلة', style: TextStyle(
                           fontSize: 20,
                           color: button,
                           fontFamily: 'AA-GALAXY'
                       ),),
-                      onTap: (){
+                      onTap: ()async{
                         Navigator.pop(context);
-                        BlocProvider.of<AuthCubit>(context).signOut();
-                        BlocProvider.of<UserCubit>(context).emit(UserInitial());
-                        BlocProvider.of<RegCubit>(context).emit(RegInitial());
+                        navigatorKey.currentState.push(MaterialPageRoute(builder: (_) => FavoritesScreen(appUser: Utils.getCurrentUser(context),)));
                       },
                     ),
                   ),
@@ -110,28 +114,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     textDirection: TextDirection.rtl,
                     child: ListTile(
                       leading: Icon(Icons.all_inclusive,color: button,size: 25,),
-                      trailing: RaisedButton(
-                        color: button,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        elevation: 2,
-                        onPressed: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: const Text('قريبا',style: TextStyle(letterSpacing: 1,fontSize: 17,color: white,fontFamily: 'AA-GALAXY'),
-                            textAlign: TextAlign.center,),
-                        ),
-                      ),
                       title: Text('الترشيحات', style: TextStyle(
                           fontSize: 20,
                           color: button,
                           fontFamily: 'AA-GALAXY',
                       ),),
-                      onTap: ()async{
-
+                      onTap: (){
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => MainCategories(nomination: Nomination.NOM,)));
                       },
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Divider(height: 1,color: black,),
+                  ),
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: ListTile(
+                      leading: Icon(Icons.rate_review_outlined,color: button,size: 25,),
+                      title: Text('صنف التطبيق', style: TextStyle(
+                        fontSize: 20,
+                        color: button,
+                        fontFamily: 'AA-GALAXY',
+                      ),),
+                      onTap: ()async{
+                        await launch(APP_LINK);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: button,
+                        child: Center(
+                          child: Text('علينا',style: TextStyle(fontSize: 35,color: white,
+                              fontFamily: 'AA-GALAXY'),),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Text('${packageInfo.version}',style: TextStyle(fontSize: 20,color: button,
+                        fontFamily: 'AA-GALAXY',fontWeight: FontWeight.bold),),
                   ),
                 ],
               ),

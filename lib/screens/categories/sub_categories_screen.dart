@@ -21,7 +21,7 @@ class SubCategories extends StatefulWidget {
   _SubCategoriesState createState() => _SubCategoriesState();
 }
 
-class _SubCategoriesState extends State<SubCategories> {
+class _SubCategoriesState extends State<SubCategories>{
   List<int> _selectedIndexes= [];
   List<String> _selectedCategories = [];
   final Map<String, dynamic> values = {};
@@ -107,8 +107,10 @@ class _SubCategoriesState extends State<SubCategories> {
                       childAspectRatio: 3.5,
                       children: [
                         ...(_selectedCategories).map((e) {
-                          return Center(child: Text('$e',style: TextStyle(fontFamily: 'AA-GALAXY',fontSize: 3 * SizeConfig.blockSizeVertical,
-                            color: white,letterSpacing: 1,), textAlign: TextAlign.end,));
+                          return Center(
+                            child: Text('$e',style: TextStyle(fontFamily: 'AA-GALAXY',fontSize: 3 * SizeConfig.blockSizeVertical,
+                                color: white,letterSpacing: 1,), textAlign: TextAlign.end,),
+                          );
                         }).toList(),
                       ],
                     ),
@@ -186,7 +188,7 @@ class _SubCategoriesState extends State<SubCategories> {
           height: 50,
           width: SizeConfig.screenWidth,
           child: Center(
-            child: Text('اختارى قائمتك',style: TextStyle(fontFamily: 'AA-GALAXY',fontSize: 30,
+            child: Text('اختارى قائمتك',style: TextStyle(fontFamily: 'AA-GALAXY',fontSize: 25,
                  color: widget.index == 0 ? white : black,letterSpacing: 1,fontWeight: FontWeight.bold,),
             ),
           ),
@@ -228,7 +230,8 @@ class _SubCategoriesState extends State<SubCategories> {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Text(widget.list[index],
-                    style: TextStyle(letterSpacing: 1,fontSize: 3 * SizeConfig.blockSizeVertical,color: white,fontFamily: 'AA-GALAXY'),),
+                    style: TextStyle(letterSpacing: 1,fontSize: 3 * SizeConfig.blockSizeVertical,color: white,fontFamily: 'AA-GALAXY'),
+                    textAlign: TextAlign.center,),
                 ),
               ),
             );
@@ -237,7 +240,7 @@ class _SubCategoriesState extends State<SubCategories> {
   }
 
   void _saveMyMainList(MenuCubit provider) {
-    provider.checkMenuExistence(values,widget.category);
+    provider.checkMenuExistence(widget.category);
   }
 
   void _savePreferences(){

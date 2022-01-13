@@ -1,9 +1,10 @@
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
 import 'package:alena/models/user.dart';
-import '../../widgets/helpers/shared_widgets.dart';
+import 'package:alena/utils/constants.dart';
+import '../../../widgets/helpers/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../utils/shared.dart';
+import '../../../utils/shared.dart';
 
 class EditInfoScreen extends StatefulWidget {
   final int load;
@@ -16,8 +17,9 @@ class EditInfoScreen extends StatefulWidget {
 }
 
 class _EditInfoScreenState extends State<EditInfoScreen> {
-  TextEditingController aboutController = new TextEditingController();
+  final TextEditingController aboutController = new TextEditingController();
   final formKey = GlobalKey<FormState>();
+  String _name;
   bool isLoading = false;
 
   @override
@@ -102,6 +104,12 @@ class _EditInfoScreenState extends State<EditInfoScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  textDirection: Utils.isRTL(_name.isNotEmpty ? _name : aboutController.text) ? TextDirection.rtl : TextDirection.ltr,
+                  onChanged: (value){
+                    setState(() {
+                      _name = value;
+                    });
+                  },
                   style: TextStyle(color: black,fontSize: 18,),
                   decoration: textInputDecoration2(text),
                   controller: aboutController,

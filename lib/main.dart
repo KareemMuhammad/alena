@@ -1,4 +1,10 @@
 import 'dart:math';
+import 'package:alena/database/blocs/additional_menu_bloc/additional_menu_cubit.dart';
+import 'package:alena/database/blocs/favorite_bloc/favorite_cubit.dart';
+import 'package:alena/database/blocs/product_bloc/product_bloc.dart';
+import 'package:alena/database/blocs/vendor_bloc/vendor_bloc.dart';
+import 'package:alena/database/repositories/product_repository.dart';
+import 'package:alena/database/repositories/vendors_repository.dart';
 import 'package:alena/services/remote_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -100,19 +106,32 @@ class MyApp extends StatelessWidget {
           create: (context) => UserCubit(userRepository: UserRepository()),
         ),
         BlocProvider(
+          create: (context) => FavoriteCubit(userRepository: UserRepository(),productRepository: ProductRepository()),
+        ),
+        BlocProvider(
           create: (context) => RegCubit(userRepository: UserRepository()),
         ),
         BlocProvider(
+          create: (context) => ProductCubit(productRepo: ProductRepository()),
+        ),
+        BlocProvider(
+          create: (context) => VendorCubit(vendorRepo: VendorsRepository(),productRepo: ProductRepository()),
+        ),
+        BlocProvider(
           create: (context) => MenuCubit(menuRepo: MenuRepository())..loadUserMenu(),
+        ),
+        BlocProvider(
+          create: (context) => AdditionalMenuCubit(menuRepo: MenuRepository())..loadUserAdditionalMenu(),
         ),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'Tajawal-Medium',
           appBarTheme: AppBarTheme(
             color: white,
-            iconTheme: IconThemeData(color: black)
+            iconTheme: IconThemeData(color: white)
           ),
         ),
         home: prefValue != null ? WrapperScreen() : TipsSplashScreen(),

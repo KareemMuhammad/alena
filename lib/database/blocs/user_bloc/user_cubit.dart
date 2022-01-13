@@ -19,6 +19,8 @@ class UserCubit extends Cubit<UserState>{
   final FacebookAuth _facebookLogin = FacebookAuth.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  AppUser get getUser => _user;
+
   Future loadUserData()async{
     try {
       emit(UserLoading());
@@ -63,9 +65,7 @@ class UserCubit extends Cubit<UserState>{
       final LoginResult loginResult = await _facebookLogin.login(permissions: ['email', 'public_profile', 'user_gender',],);
       if(loginResult.status == LoginStatus.success) {
         final OAuthCredential credential = FacebookAuthProvider.credential(loginResult.accessToken.token);
-        final Map<String, dynamic> data = await FacebookAuth.i.getUserData(
-          fields: "name,email,birthday,gender",
-        );
+        final Map<String, dynamic> data = await FacebookAuth.i.getUserData(fields: "name,email,birthday,gender",);
         final result = await _auth.signInWithCredential(credential);
         User user = result.user;
         bool newUser = await userRepository.authenticateFacebookAndGoogle(user);
@@ -78,7 +78,9 @@ class UserCubit extends Cubit<UserState>{
               gender: data["user_gender"] ?? '',
               token: '',
               doneList: [],
-              weddingDate: '');
+              weddingDate: '',
+              additionalList: [],
+              favorites: []);
           await userRepository.saveUserToDb(appUser.toMap(), user.uid);
           loadUserData();
           return true;
@@ -119,7 +121,9 @@ class UserCubit extends Cubit<UserState>{
               gender: '',
               doneList: [],
               token: '',
-          weddingDate: '');
+              weddingDate: '',
+              additionalList: [],
+              favorites: []);
           await userRepository.saveUserToDb(appUser.toMap(), user.uid);
           loadUserData();
           return true;
@@ -181,6 +185,19 @@ class UserCubit extends Cubit<UserState>{
     }
   }
 
+  Future updateAdditionalList(String device,int index)async{
+    try {
+      if(index == 0) {
+        await userRepository.updateUserAdditionalList(device, _auth.currentUser.uid);
+      }else{
+        await userRepository.removeFromUserAdditionalList(device, _auth.currentUser.uid);
+      }
+    }catch(e){
+      emit(UserLoadError());
+      print(e.toString());
+    }
+  }
+
   Future removeAllDoneOfDeletedMenu(List<String> list)async{
     try {
        AppUser newUser = await userRepository.getUserById(_auth.currentUser.uid);
@@ -189,6 +206,20 @@ class UserCubit extends Cubit<UserState>{
             await userRepository.removeFromUserDoneList(device, _auth.currentUser.uid);
           }
         }
+    }catch(e){
+      emit(UserLoadError());
+      print(e.toString());
+    }
+  }
+
+  Future removeAllAdditionalOfDeletedMenu(List<String> list)async{
+    try {
+      AppUser newUser = await userRepository.getUserById(_auth.currentUser.uid);
+      for(String device in list) {
+        if (newUser.additionalList.contains(device)) {
+          await userRepository.removeFromUserAdditionalList(device, _auth.currentUser.uid);
+        }
+      }
     }catch(e){
       emit(UserLoadError());
       print(e.toString());

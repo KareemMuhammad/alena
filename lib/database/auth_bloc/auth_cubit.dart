@@ -14,6 +14,8 @@ class AuthCubit extends Cubit<AuthState>{
   AppUser _user;
   User _fireUser ;
 
+  AppUser get getUser => _user;
+
   final GoogleSignIn _googleUser = GoogleSignIn();
   final FacebookAuth _facebookLogin = FacebookAuth.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -37,7 +39,7 @@ class AuthCubit extends Cubit<AuthState>{
     try {
       _fireUser = await userRepository.getCurrentUser();
       if(_fireUser != null) {
-       loadUserData();
+       await loadUserData();
       }else{
         emit(AuthFailure());
       }

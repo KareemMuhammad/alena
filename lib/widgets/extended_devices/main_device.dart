@@ -69,7 +69,8 @@ class _SingleDeviceWidgetState extends State<SingleDeviceWidget> {
 
                           widget.index == 5 ? CheckDevice(devices: getSinglePlastics(widget.appUser.doneList),):
 
-                          CheckDevice(devices: getSingleCleaning(widget.appUser.doneList),)
+                          CheckDevice(devices: getSingleCleaning(widget.appUser.doneList),),
+
                         ],
                       ),
                     ],
@@ -88,7 +89,8 @@ class _SingleDeviceWidgetState extends State<SingleDeviceWidget> {
 
                          widget.index == 5 ? CheckDevice(devices: getSinglePlastics(state.appUser.doneList),):
 
-                         CheckDevice(devices: getSingleCleaning(state.appUser.doneList),)
+                         CheckDevice(devices: getSingleCleaning(state.appUser.doneList),),
+
                         ],
                       ),
                     ],
@@ -101,9 +103,12 @@ class _SingleDeviceWidgetState extends State<SingleDeviceWidget> {
                   return Center(child: Text('حدث خطأ فى تحميل البيانات!', style: TextStyle(
                       fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
                     textAlign: TextAlign.center,),);
+                }else{
+                  return Container();
                 }
               },
             ),
+
           ],
       ),
     );

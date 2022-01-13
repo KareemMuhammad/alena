@@ -1,3 +1,4 @@
+import 'package:alena/widgets/helpers/custom_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../utils/shared.dart';
@@ -5,7 +6,7 @@ import '../../utils/shared.dart';
 Widget customAppBar(BuildContext context){
   return AppBar(
       iconTheme: IconThemeData(
-        color: white, //change your color here
+        color: white,
       ),
       backgroundColor: button,
       elevation: 2,
@@ -13,6 +14,54 @@ Widget customAppBar(BuildContext context){
     title: Padding(
       padding: EdgeInsets.fromLTRB(2, 2, 6, 2),
       child: Image.asset("assets/logo.png",fit: BoxFit.cover,height: 70,width: 70,),
+    ),
+  );
+}
+
+Widget loadVendorShimmer(){
+  return Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: white,
+      elevation: 4,
+      child: MyShimmer.rectangular()
+    ),
+  );
+}
+
+Widget loadProductShimmer(){
+  return Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: white,
+      elevation: 4,
+      child: Container(
+        height: 300,
+        decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          children: [
+             MyShimmer.rectangular(height: 130,),
+            const SizedBox(height: 10,),
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: MyShimmer.rectangular(height: 13,width: 60,),
+             ),
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: MyShimmer.rectangular(height: 25,),
+             ),
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: MyShimmer.circular(width: 65,height: 65,),
+             ),
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -48,11 +97,11 @@ InputDecoration textInputDecoration2(String hint) => InputDecoration(
   hintText: hint,
   hintStyle: TextStyle(color: black,fontSize: 20,fontFamily: 'AA-GALAXY'),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: white, width: 2.0),
+    borderSide: BorderSide(color: Colors.grey[600], width: 1.0),
     borderRadius: BorderRadius.circular(20)
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: white, width: 2.0),
+    borderSide: BorderSide(color: white, width: 1.0),
       borderRadius: BorderRadius.circular(20)
   ),
 );

@@ -1,3 +1,6 @@
+import 'package:alena/screens/categories/main_categories.dart';
+import 'package:alena/screens/navigation/bar/nominations.dart';
+
 import '../categories/sub_categories_screen.dart';
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
@@ -7,8 +10,9 @@ class ExtendedClothesCategory extends StatefulWidget {
   final List<String> list;
   final String category;
   final int index;
+  final Nomination nomination;
 
-  const ExtendedClothesCategory({Key key, this.list, this.category, this.index}) : super(key: key);
+  const ExtendedClothesCategory({Key key, this.list, this.category, this.index, this.nomination}) : super(key: key);
   @override
   _ExtendedClothesCategoryState createState() => _ExtendedClothesCategoryState();
 }
@@ -27,13 +31,13 @@ class _ExtendedClothesCategoryState extends State<ExtendedClothesCategory> {
         centerTitle: true,
         backgroundColor: button,
         elevation: 2,
-        title: Text('${widget.category}',style: TextStyle(fontSize: 30,color: white,fontFamily: 'AA-GALAXY')
+        title: Text('${widget.category}',style: TextStyle(fontSize: 25,color: white,fontFamily: 'AA-GALAXY')
           ,textAlign: TextAlign.center,),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             ...(widget.list).map((device) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -41,18 +45,30 @@ class _ExtendedClothesCategoryState extends State<ExtendedClothesCategory> {
                   onTap: (){
                     switch (device){
                       case 'مستلزمات الملابس':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.CLOTHES_TOOLS,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.CLOTHES_TOOLS,index: widget.index,)));
                         break;
                       case 'اللانجيري':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.CLOTHES_LANGERY,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.CLOTHES_LANGERY,index: widget.index,)));
                         break;
                       case 'ملابس البيت':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.CLOTHES_HOME,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.CLOTHES_HOME,index: widget.index,)));
                         break;
                       case 'ملابس الخروج':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.CLOTHES_OUTING,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.CLOTHES_OUTING,index: widget.index,)));
                         break;

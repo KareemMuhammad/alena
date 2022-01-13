@@ -1,3 +1,6 @@
+import 'package:alena/screens/categories/main_categories.dart';
+import 'package:alena/screens/navigation/bar/nominations.dart';
+
 import '../categories/sub_categories_screen.dart';
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
@@ -7,8 +10,9 @@ class ExtendedPersonalCategory extends StatefulWidget {
   final List<String> list;
   final String category;
   final int index;
+  final Nomination nomination;
 
-  const ExtendedPersonalCategory({Key key, this.list, this.category, this.index}) : super(key: key);
+  const ExtendedPersonalCategory({Key key, this.list, this.category, this.index, this.nomination}) : super(key: key);
   @override
   _ExtendedPersonalCategoryState createState() => _ExtendedPersonalCategoryState();
 }
@@ -27,13 +31,13 @@ class _ExtendedPersonalCategoryState extends State<ExtendedPersonalCategory> {
         centerTitle: true,
         backgroundColor: button,
         elevation: 2,
-        title: Text('${widget.category}',style: TextStyle(fontSize: 30,color: white,fontFamily: 'AA-GALAXY')
+        title: Text('${widget.category}',style: TextStyle(fontSize: 25,color: white,fontFamily: 'AA-GALAXY')
           ,textAlign: TextAlign.center,),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             ...(widget.list).map((device) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -41,22 +45,37 @@ class _ExtendedPersonalCategoryState extends State<ExtendedPersonalCategory> {
                   onTap: (){
                     switch (device){
                       case 'المكياج':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.PERSONAL_ACC_MAKEUP,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.PERSONAL_ACC_MAKEUP,index: widget.index,)));
                         break;
                       case 'أدوات شخصية':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.PERSONAL_ACC_TOOLS,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.PERSONAL_ACC_TOOLS,index: widget.index,)));
                         break;
                       case 'منتجات العناية بالبشرة':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.PERSONAL_ACC_SKIN,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.PERSONAL_ACC_SKIN,index: widget.index,)));
                         break;
                       case 'منتجات العناية بالجسم':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.PERSONAL_ACC_BODY,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.PERSONAL_ACC_BODY,index: widget.index,)));
                         break;
                       case 'منتجات العناية بالشعر':
+                        widget.nomination == Nomination.NOM ?
+                        navigatorKey.currentState.push(
+                            MaterialPageRoute(builder: (_) => NominationsScreen(category: device,list: Utils.PERSONAL_ACC_HAIR,index: widget.index,))):
                         navigatorKey.currentState.push(
                             MaterialPageRoute(builder: (_) => SubCategories(category: device,list: Utils.PERSONAL_ACC_HAIR,index: widget.index,)));
                         break;

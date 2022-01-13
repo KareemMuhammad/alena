@@ -2,6 +2,7 @@ import 'package:alena/database/auth_bloc/auth_cubit.dart';
 import 'package:alena/database/auth_bloc/auth_state.dart';
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
 import 'package:alena/database/blocs/user_bloc/user_state.dart';
+import 'package:alena/utils/constants.dart';
 import '../../database/blocs/reg_bloc/reg_cubit.dart';
 import '../../database/blocs/reg_bloc/reg_state.dart';
 import '../../widgets/helpers/shared_widgets.dart';
@@ -19,16 +20,10 @@ class _SignUpAlenaState extends State<SignUpAlena> {
   final TextEditingController passwordController = new TextEditingController();
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController confirmPasswordController = new TextEditingController();
-  final List<String> genderList = ['ذكر', 'أنثى'];
   final formKey = GlobalKey<FormState>();
   String _userNotFound = 'البريد الالكترونى موجود بالفعل';
-  String _gender;
-
-  @override
-  void initState() {
-    super.initState();
-    _gender = genderList[1];
-  }
+  String _name;
+  bool isUnCover = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +66,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                   return spinKit;
                 }else if( state is RegLoadError ){
                   return failureUi(state);
-                }else if(state is RegUserLoaded){
+                }else {
                   return Container();
                 }
               },
@@ -107,6 +102,12 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                       padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                       child: TextFormField(
                         style: TextStyle(color: black,fontSize: 18,),
+                        textDirection: Utils.isRTL(_name.isNotEmpty ? _name : nameController.text) ? TextDirection.rtl : TextDirection.ltr,
+                        onChanged: (value){
+                          setState(() {
+                            _name = value;
+                          });
+                        },
                         decoration: textInputDecorationSign('اسم المستخدم',Icons.person),
                         controller: nameController,
                         validator: (val){
@@ -118,11 +119,11 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                     padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
-                      decoration: textInputDecorationSign('كلمة المرور',Icons.lock),
+                      decoration: customDecore('كلمة المرور'),
                       controller: passwordController,
-                      obscureText: true,
+                      obscureText: isUnCover ? false : true,
                       validator: (val) {
-                        return val.isEmpty || val.length < 6 ? 'كلمة مرور ضعيفة' : null;
+                        return val.isEmpty || val.length < 6 ? 'كلمة مرور خاطئة' : null;
                       },
                     ),
                   ),
@@ -130,9 +131,9 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                     padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
-                      decoration: textInputDecorationSign('تأكيد كلمة المرور',Icons.lock),
+                      decoration: customDecore('تأكيد كلمة المرور'),
                       controller: confirmPasswordController,
-                      obscureText: true,
+                      obscureText: isUnCover ? false : true,
                       validator: (val) {
                         return val.isEmpty || val != passwordController.text ? 'كلمة مرور غير متشابهة' : null;
                       },
@@ -154,7 +155,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                 onPressed: () async{
                   if(formKey.currentState.validate()) {
                     BlocProvider.of<RegCubit>(context).signUpUserWithEmailPass(
-                        emailController.text, passwordController.text,_gender,nameController.text);
+                        emailController.text, passwordController.text,'',nameController.text);
                   }
                 },
                 child: Text('تسجيل',style: TextStyle(fontSize: 22,color: white,
@@ -226,9 +227,9 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                     padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
-                      decoration: textInputDecorationSign('كلمة المرور',Icons.lock),
+                      decoration: customDecore('كلمة المرور'),
                       controller: passwordController,
-                      obscureText: true,
+                      obscureText: isUnCover ? false : true,
                       validator: (val) {
                         return val.isEmpty || val.length < 6 ? 'كلمة مرور خاطئة' : null;
                       },
@@ -238,9 +239,9 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                     padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
-                      decoration: textInputDecorationSign('تأكيد كلمة المرور',Icons.lock),
+                      decoration: customDecore('تأكيد كلمة المرور'),
                       controller: confirmPasswordController,
-                      obscureText: true,
+                      obscureText: isUnCover ? false : true,
                       validator: (val) {
                         return val.isEmpty || val != passwordController.text ? 'كلمة مرور غير متشابهة' : null;
                       },
@@ -262,7 +263,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                 onPressed: () async{
                   if(formKey.currentState.validate()) {
                     BlocProvider.of<RegCubit>(context).signUpUserWithEmailPass(
-                        emailController.text, passwordController.text,_gender,nameController.text);
+                        emailController.text, passwordController.text,'',nameController.text);
                   }
                 },
                 child: Text('تسجيل',style: TextStyle(fontSize: 22,color: white,
@@ -296,6 +297,34 @@ class _SignUpAlenaState extends State<SignUpAlena> {
     );
   }
 
+  InputDecoration customDecore(String hint){
+    return InputDecoration(
+      filled: true,
+      fillColor: white,
+      hintTextDirection: TextDirection.rtl,
+      hintText: hint,
+      hintStyle: TextStyle(fontSize: 18,color: button,fontFamily: 'AA-GALAXY'),
+      border: InputBorder.none,
+      errorStyle: TextStyle(color: Colors.grey[700],fontSize: 16),
+      contentPadding: EdgeInsets.all(8),
+      prefixIcon: IconButton(
+        icon: Icon(isUnCover ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,size: 20,color: container,),
+        onPressed: (){
+          setState(() {
+            isUnCover = !isUnCover;
+          });
+        },
+      ),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: white, width: 2.0),
+          borderRadius: BorderRadius.circular(20)
+      ),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: white, width: 2.0),
+          borderRadius: BorderRadius.circular(20)
+      ),
+    );
+  }
 
   @override
   void dispose() {

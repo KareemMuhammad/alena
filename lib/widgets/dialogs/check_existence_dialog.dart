@@ -39,7 +39,9 @@ class _CheckMenuDialogState extends State<CheckMenuDialog> {
               ),
               elevation: 2,
               onPressed: () async{
-                await widget.userCubit.removeAllDoneOfDeletedMenu(widget.categories);
+                if(widget.categories.isNotEmpty) {
+                  await widget.userCubit.removeAllDoneOfDeletedMenu(widget.categories);
+                }
                 await widget.menuCubit.deleteSingleMenu(widget.category);
                 widget.userCubit.loadUserData();
                 Navigator.pop(context,'done');

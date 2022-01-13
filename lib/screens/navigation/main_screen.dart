@@ -3,7 +3,6 @@ import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
 import 'package:alena/database/blocs/user_bloc/user_state.dart';
 import 'package:alena/models/user.dart';
 import 'package:alena/widgets/helpers/love_animation.dart';
-import 'package:alena/widgets/helpers/shared_widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../../main.dart';
@@ -180,7 +179,7 @@ class _MainScreenState extends State<MainScreen> {
                 const SizedBox(height: 15,),
               ],
             ),
-        ) : state is UserInitial ?
+        ) :
      SingleChildScrollView(
             child: Column(crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -314,8 +313,7 @@ class _MainScreenState extends State<MainScreen> {
                 const SizedBox(height: 15,),
               ],
             ),
-        ) : state is UserLoading ?
-         spinKit : const SizedBox();
+        );
       },
     );
   }

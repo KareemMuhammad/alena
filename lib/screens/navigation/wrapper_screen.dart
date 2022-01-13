@@ -23,6 +23,8 @@ class WrapperScreen extends StatelessWidget {
           return SignUpAlena();
         }else if (state is AuthPasswordReset){
           return PasswordReset();
+        }else{
+          return const SizedBox();
         }
       },
     );

@@ -1,10 +1,19 @@
+import 'dart:convert';
 import 'dart:math';
+import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
+import 'package:alena/models/user.dart';
 import 'package:alena/screens/navigation/wrapper_screen.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:uuid/uuid.dart';
 import 'shared.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart' as intl;
+import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
 
 class Utils{
 
@@ -55,6 +64,8 @@ class Utils{
   /////////////////////////////////////////////////////////////// constants //////////////////////////////////////////////////////////////
   static const String SHARED_KEY = "tipsKey";
 
+  static const String REGEX_PATTERN = r"^[\u0621-\u064A\u0660-\u0669 ]+$";
+
   static const String SHOWCASE_KEY = "showcaseKey";
 
   static const String SHARED_SELECTED_CATEGORIES_KEY = "selectedCategoriesKey";
@@ -67,7 +78,15 @@ class Utils{
 
   static FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  static const String SELECT_ALL = "مكتمل";
+  static AppUser getCurrentUser(BuildContext context){
+    final AppUser currentUser = BlocProvider.of<UserCubit>(context).getUser;
+    return currentUser;
+  }
+
+  static bool isRTL(String text) {
+    return intl.Bidi.detectRtlDirectionality(text);
+  }
+
 
   static showToast(String text){
     Fluttertoast.showToast(
@@ -80,6 +99,28 @@ class Utils{
       fontSize: 18.0,
     );
   }
+
+  static showSnack(String text,String title,BuildContext context,Color color)async{
+    await Flushbar(
+      messageText: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Text('$text',style: TextStyle(color: white,fontFamily: '',fontSize: 17),)),
+      titleText: Directionality(
+          textDirection: ui.TextDirection.rtl,
+          child: Text('$title',style: TextStyle(color: white,fontFamily: '',fontSize: 17,fontWeight: FontWeight.w300),)),
+      backgroundColor: color,
+      icon: Icon(Icons.info_outline,color: white,),
+      duration: Duration(seconds: 2),
+    ).show(context);
+  }
+
+  static Future<Coordinates> getCoordinates(String query)async{
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    print("${first.featureName} : ${first.coordinates}");
+    return first.coordinates;
+  }
+
 
   static int dateDifference(String date,String time){
     return DateTime(int.parse(date.split('-')[0]),int.parse(date.split('-')[1],)

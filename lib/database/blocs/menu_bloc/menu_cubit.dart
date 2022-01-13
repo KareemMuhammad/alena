@@ -42,7 +42,7 @@ class MenuCubit extends Cubit<MenuState>{
     }
   }
 
-  Future checkMenuExistence(Map<String,dynamic> values,String category)async{
+  Future checkMenuExistence(String category)async{
     try {
       print('check exist');
       bool menuBool = await menuRepo.authenticateMenu(_auth.currentUser.uid,category);

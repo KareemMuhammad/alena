@@ -1,7 +1,8 @@
 import 'package:alena/database/blocs/menu_bloc/menu_cubit.dart';
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
+import 'package:alena/models/menu.dart';
 import 'package:alena/screens/categories/main_categories.dart';
-import 'package:flutter/foundation.dart';
+import 'package:alena/screens/navigation/products_nav/vendors_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -83,16 +84,37 @@ class _CheckWidgetState extends State<CheckWidget> {
                 alignment: Alignment.centerRight,
                 width: SizeConfig.screenWidth * 0.6,
                 child: Slidable(
-                  actionPane: SlidableStrechActionPane(),
-                  actionExtentRatio: 0.25,
-                  secondaryActions: <Widget>[
-                    IconSlideAction(
-                      caption: 'حذف',
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.5,
+                  actions: <Widget>[
+                    RaisedButton(
                       color: button,
-                      icon: Icons.delete,
-                      onTap: () {
-                       removeSingle(userCubit, menuCubit,key);
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      elevation: 4,
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => VendorsScreen(title: key,)));
                       },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 2),
+                        child: const Text('الترشيحات',style: TextStyle(fontSize: 18,color: white,fontFamily: 'AA-GALAXY'),
+                          textAlign: TextAlign.center,),
+                      ),
+                    ),
+                  ],
+                  secondaryActions: <Widget>[
+                    RaisedButton(
+                      color: button,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      elevation: 4,
+                      onPressed: () {
+                        removeSingle(userCubit, menuCubit,key);
+                      },
+                      child: const Text('حذف',style: TextStyle(fontSize: 18,color: white,fontFamily: 'AA-GALAXY'),
+                          textAlign: TextAlign.center,),
                     ),
                   ],
                   child: new CheckboxListTile(
@@ -129,7 +151,7 @@ class _CheckWidgetState extends State<CheckWidget> {
                          },
                          child: Padding(
                            padding: const EdgeInsets.all(8.0),
-                           child: const Text('تأكيد',style: TextStyle(fontSize: 23,color: white,fontFamily: 'AA-GALAXY'),
+                           child: const Text('تأكيد',style: TextStyle(fontSize: 22,color: white,fontFamily: 'AA-GALAXY'),
                              textAlign: TextAlign.center,),
                          ),
                        ),
@@ -137,13 +159,23 @@ class _CheckWidgetState extends State<CheckWidget> {
 
              Padding(
                padding: const EdgeInsets.all(5.0),
-               child: Center(child: Text('اسحبى العنصر للشمال للحذف', style: TextStyle(fontSize: 17, color: container, fontFamily: 'AA-GALAXY'),)),
+               child: Center(child: Text('اسحبى العنصر للشمال للحذف او لليمين للترشيحات', style: TextStyle(fontSize: 17, color: container, fontFamily: 'AA-GALAXY'),)),
              ),
              const SizedBox(height: 8,),
           ]
         ),
       ),
     );
+  }
+
+  Menu getSingleMenu(String category,List<Menu> list) {
+    var exist = list.any((menu) => menu.category == category);
+    if(exist) {
+      Menu singleMenu = list.firstWhere((menu) => menu.category == category);
+      return singleMenu;
+    }else{
+      return Menu();
+    }
   }
 
   void addSingle(UserCubit userCubit,MenuCubit menuCubit){

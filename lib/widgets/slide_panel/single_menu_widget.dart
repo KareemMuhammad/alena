@@ -1,11 +1,11 @@
 import 'package:alena/database/blocs/menu_bloc/menu_cubit.dart';
 import 'package:alena/database/blocs/menu_bloc/menu_state.dart';
 import 'package:alena/models/menu.dart';
-import 'package:alena/widgets/extended_widgets/extended_clothes_widget.dart';
-import 'package:alena/widgets/extended_widgets/extended_electric_widget.dart';
-import 'package:alena/widgets/extended_widgets/extended_house_widget.dart';
-import 'package:alena/widgets/extended_widgets/extended_kitchen_widget.dart';
-import 'package:alena/widgets/extended_widgets/extended_personal_widget.dart';
+import 'package:alena/widgets/extended_menus/extended_clothes_widget.dart';
+import 'package:alena/widgets/extended_menus/extended_electric_widget.dart';
+import 'package:alena/widgets/extended_menus/extended_house_widget.dart';
+import 'package:alena/widgets/extended_menus/extended_kitchen_widget.dart';
+import 'package:alena/widgets/extended_menus/extended_personal_widget.dart';
 import 'package:alena/widgets/helpers/check_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +23,7 @@ class SingleMenuWidget extends StatefulWidget {
 
 class _SingleMenuWidgetState extends State<SingleMenuWidget> {
   bool isCollapse = false;
-  int selectedRadio;
+  List<Menu> _dummyMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class _SingleMenuWidgetState extends State<SingleMenuWidget> {
     widget.index == 8  ?
     ExtendedClothesWidget(index: widget.index,category: widget.category,) :
     widget.index == 9 ?
-    ExtendedHouseWidget(index: widget.index,category: widget.category,)
-   : Padding(
+    ExtendedHouseWidget(index: widget.index,category: widget.category,) :
+    Padding(
       padding: const EdgeInsets.all(10.0),
       child: ExpansionTile(
         title: Text('${widget.category}', style: TextStyle(fontSize: 25, color: isCollapse ? black : white,
@@ -66,7 +66,7 @@ class _SingleMenuWidgetState extends State<SingleMenuWidget> {
             builder: (BuildContext context, state) {
               if(state is MenuDeleteError){
               return Center(child: Text('حدث خطأ فى حذف البيانات!', style: TextStyle(
-                    fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                    fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                   textAlign: TextAlign.center,),);
               }
               if(state is MenuExisted){
@@ -75,6 +75,7 @@ class _SingleMenuWidgetState extends State<SingleMenuWidget> {
               if(state is MenuInitial){
                return Center(child: SpinKitCircle(color: button,size: 35,),);
               } else if(state is MenuLoaded){
+                _dummyMenu = state.menu;
                return Row(mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CheckWidget(values: getSingleMenu(widget.category, state.menu).list,
@@ -82,15 +83,23 @@ class _SingleMenuWidgetState extends State<SingleMenuWidget> {
                               ],
                             );
               }else if(state is MenuLoading){
-                return Center(child: SpinKitCircle(color: button,size: 35,),);
+                return _dummyMenu == null ? Center(child: SpinKitCircle(color: button,size: 35,),):
+                Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CheckWidget(values: getSingleMenu(widget.category, _dummyMenu).list,
+                      menuId: getSingleMenu(widget.category, _dummyMenu).id,menuCategory: widget.category,),
+                  ],
+                );
               }else if(state is MenuLoadError){
                 return Center(child: Text('حدث خطأ فى تحميل البيانات!', style: TextStyle(
-                    fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                    fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                   textAlign: TextAlign.center,),);
               }else if(state is MenuNotUpdated){
                 return Center(child: Text('حدث خطأ فى تحديث البيانات!', style: TextStyle(
-                    fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                    fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                   textAlign: TextAlign.center,),);
+              }else{
+                return Container();
               }
             },
           ),

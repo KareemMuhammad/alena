@@ -8,18 +8,19 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../utils/shared.dart';
 import '../helpers/check_widget.dart';
 
-class ExtendedKitchenWidget extends StatefulWidget {
+class ExtendedElectricWidget extends StatefulWidget {
   final String category;
   final int index;
 
-  const ExtendedKitchenWidget({Key key, this.category, this.index}) : super(key: key);
+  const ExtendedElectricWidget({Key key, this.category, this.index}) : super(key: key);
   @override
-  _ExtendedKitchenWidgetState createState() => _ExtendedKitchenWidgetState();
+  _ExtendedElectricWidgetState createState() => _ExtendedElectricWidgetState();
 }
 
-class _ExtendedKitchenWidgetState extends State<ExtendedKitchenWidget> {
+class _ExtendedElectricWidgetState extends State<ExtendedElectricWidget> {
   bool isCollapse = false;
   bool isCollapseExtend = false;
+  List<Menu> _dummyMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +41,11 @@ class _ExtendedKitchenWidgetState extends State<ExtendedKitchenWidget> {
           });
         },
         children: [
-          ...(Utils.KITCHEN_DEVICES).map((device) {
+          ...(Utils.ELECTRIC_DEVICES).map((device) {
             return ExpansionTile(
-              title: Text(device, style: TextStyle(fontSize: 22, color: isCollapseExtend ? black : white,
-                  fontFamily: 'AA-GALAXY'), textAlign: TextAlign.center,),
+              title: Text(device, style: TextStyle(
+                  fontSize: 22, color: isCollapseExtend ? black : white, fontFamily: 'AA-GALAXY'),
+                textAlign: TextAlign.center,),
               textColor: black,
               backgroundColor: white,
               collapsedBackgroundColor: button,
@@ -67,7 +69,7 @@ class _ExtendedKitchenWidgetState extends State<ExtendedKitchenWidget> {
                   builder: (BuildContext context, state) {
                     if(state is MenuDeleteError){
                       return Center(child: Text('حدث خطأ فى حذف البيانات!', style: TextStyle(
-                          fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                          fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                         textAlign: TextAlign.center,),);
                     }
                     if(state is MenuExisted){
@@ -77,18 +79,26 @@ class _ExtendedKitchenWidgetState extends State<ExtendedKitchenWidget> {
                       return Center(child: SpinKitCircle(color: button,size: 35,),);
                     }
                     if(state is MenuLoaded){
+                      _dummyMenu = state.menu;
                       return Row(mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CheckWidget(values: getSingleMenu(device, state.menu).list,
-                                menuId: getSingleMenu(device, state.menu).id,menuCategory: device,),
-                            ],
-                          );
+                              CheckWidget(values: getSingleMenu(device, state.menu).list ?? {},
+                                menuId: getSingleMenu(device, state.menu).id ?? '',menuCategory: device,),
+                            ],);
                     }else if(state is MenuLoading){
-                      return Center(child: SpinKitCircle(color: button,size: 35,),);
+                      return _dummyMenu == null ? Center(child: SpinKitCircle(color: button,size: 35,),):
+                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CheckWidget(values: getSingleMenu(widget.category, _dummyMenu).list,
+                            menuId: getSingleMenu(widget.category, _dummyMenu).id,menuCategory: widget.category,),
+                        ],
+                      );
                     }else if(state is MenuLoadError){
                       return Center(child: Text('حدث خطأ فى تحميل البيانات!', style: TextStyle(
-                          fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                          fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                         textAlign: TextAlign.center,),);
+                    }else{
+                      return const SizedBox();
                     }
                   },
                 ),

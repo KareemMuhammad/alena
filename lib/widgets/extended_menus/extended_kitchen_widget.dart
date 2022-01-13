@@ -8,18 +8,19 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../utils/shared.dart';
 import '../helpers/check_widget.dart';
 
-class ExtendedClothesWidget extends StatefulWidget {
+class ExtendedKitchenWidget extends StatefulWidget {
   final String category;
   final int index;
 
-  const ExtendedClothesWidget({Key key, this.category, this.index}) : super(key: key);
+  const ExtendedKitchenWidget({Key key, this.category, this.index}) : super(key: key);
   @override
-  _ExtendedClothesWidgetState createState() => _ExtendedClothesWidgetState();
+  _ExtendedKitchenWidgetState createState() => _ExtendedKitchenWidgetState();
 }
 
-class _ExtendedClothesWidgetState extends State<ExtendedClothesWidget> {
+class _ExtendedKitchenWidgetState extends State<ExtendedKitchenWidget> {
   bool isCollapse = false;
   bool isCollapseExtend = false;
+  List<Menu> _dummyMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +41,10 @@ class _ExtendedClothesWidgetState extends State<ExtendedClothesWidget> {
           });
         },
         children: [
-          ...(Utils.CLOTHES).map((device) {
+          ...(Utils.KITCHEN_DEVICES).map((device) {
             return ExpansionTile(
-              title: Text(device, style: TextStyle(
-                  fontSize: 22, color: isCollapseExtend ? black : white, fontFamily: 'AA-GALAXY'),
-                textAlign: TextAlign.center,),
+              title: Text(device, style: TextStyle(fontSize: 22, color: isCollapseExtend ? black : white,
+                  fontFamily: 'AA-GALAXY'), textAlign: TextAlign.center,),
               textColor: black,
               backgroundColor: white,
               collapsedBackgroundColor: button,
@@ -68,7 +68,7 @@ class _ExtendedClothesWidgetState extends State<ExtendedClothesWidget> {
                   builder: (BuildContext context, state) {
                     if(state is MenuDeleteError){
                       return Center(child: Text('حدث خطأ فى حذف البيانات!', style: TextStyle(
-                          fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                          fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                         textAlign: TextAlign.center,),);
                     }
                     if(state is MenuExisted){
@@ -78,18 +78,26 @@ class _ExtendedClothesWidgetState extends State<ExtendedClothesWidget> {
                       return Center(child: SpinKitCircle(color: button,size: 35,),);
                     }
                     if(state is MenuLoaded){
+                      _dummyMenu = state.menu;
                       return Row(mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CheckWidget(values: getSingleMenu(device, state.menu).list,
-                                menuId: getSingleMenu(device, state.menu).id,menuCategory: device,),
-                            ],
-                          );
+                        children: [
+                          CheckWidget(values: getSingleMenu(device, state.menu).list ?? {},
+                            menuId: getSingleMenu(device, state.menu).id ?? '',menuCategory: device,),
+                        ],);
                     }else if(state is MenuLoading){
-                      return Center(child: SpinKitCircle(color: button,size: 35,),);
+                      return _dummyMenu == null ? Center(child: SpinKitCircle(color: button,size: 35,),):
+                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CheckWidget(values: getSingleMenu(widget.category, _dummyMenu).list,
+                            menuId: getSingleMenu(widget.category, _dummyMenu).id,menuCategory: widget.category,),
+                        ],
+                      );
                     }else if(state is MenuLoadError){
                       return Center(child: Text('حدث خطأ فى تحميل البيانات!', style: TextStyle(
-                          fontSize: 25, color: white, fontFamily: 'AA-GALAXY'),
+                          fontSize: 25, color: black, fontFamily: 'AA-GALAXY'),
                         textAlign: TextAlign.center,),);
+                    }else{
+                      return const SizedBox();
                     }
                   },
                 ),

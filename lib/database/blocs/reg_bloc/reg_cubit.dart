@@ -42,7 +42,8 @@ class RegCubit extends Cubit<RegState>{
       print("REPO : ${authResult.user.email}");
       bool newUser = await userRepository.authenticateUser(authResult.user);
       if(newUser == true){
-        AppUser appUser = AppUser(id: authResult.user.uid,email: email,password: pass,name: name, gender: gender,token: '',weddingDate: '',doneList: []);
+        AppUser appUser = AppUser(id: authResult.user.uid,email: email,password: pass,name: name,
+            gender: gender,token: '',weddingDate: '',doneList: [], additionalList: [], favorites: []);
         await userRepository.saveUserToDb(appUser.toMap(), authResult.user.uid);
         loadUserData();
         return true;
