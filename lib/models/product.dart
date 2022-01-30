@@ -67,7 +67,7 @@ class Product{
     productName = map[PRODUCT_NAME] ?? [];
     deviceName = map[DEVICE_NAME] ?? '';
     category = map[CATEGORY] ?? '';
-    price = map[PRICE] ?? '';
+    price = double.parse(map[PRICE]) ?? 0;
     images = map[IMAGES] ?? [];
     description = map[DESC] ?? '';
     city = map[CITY] ?? '';

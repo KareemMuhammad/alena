@@ -4,6 +4,7 @@ import 'package:alena/database/blocs/reg_bloc/reg_state.dart';
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
 import 'package:alena/database/blocs/user_bloc/user_state.dart';
 import 'package:alena/models/user.dart';
+import 'package:alena/screens/navigation/bar/my_orders_screen.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'edit_info.dart';
 import '../../../widgets/helpers/shared_widgets.dart';
@@ -36,47 +37,47 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 40,),
                   _customWidget('الاسم', appUser.name,0,appUser),
                   _customWidget('البريد الالكترونى', appUser.email,1,appUser),
-                  Container(
-                    margin: const EdgeInsets.all(13.0),
-                    padding: const EdgeInsets.all(13.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: button,
-                    ),
-                    child: InkWell(
-                      onTap: (){
-
-                      },
+                  GestureDetector(
+                    onTap: (){
+                      navigatorKey.currentState.push(MaterialPageRoute(builder: (_) => MyOrdersScreen()));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(13.0),
+                      padding: const EdgeInsets.all(13.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: button,
+                      ),
                       child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(AntDesign.inbox,color: white,size: 20,),
-                          const SizedBox(width: 5,),
-                          Text('طلباتى',style: TextStyle(color: white,fontSize: 19,fontFamily: 'AA-GALAXY'),)
-                        ],
+                          children: [
+                            Icon(AntDesign.inbox,color: white,size: 25,),
+                            const SizedBox(width: 8,),
+                            Text('طلباتى',style: TextStyle(color: white,fontSize: 21,fontFamily: 'AA-GALAXY'),)
+                          ],
                       ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(13.0),
-                    padding: const EdgeInsets.all(13.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: button,
-                    ),
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.pop(context);
-                        BlocProvider.of<AuthCubit>(context).signOut();
-                        BlocProvider.of<UserCubit>(context).emit(UserInitial());
-                        BlocProvider.of<RegCubit>(context).emit(RegInitial());
-                      },
-                      child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.logout,color: white,size: 20,),
-                          const SizedBox(width: 5,),
-                          Text('تسجيل خروج',style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
-                        ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                      BlocProvider.of<AuthCubit>(context).signOut();
+                      BlocProvider.of<UserCubit>(context).emit(UserInitial());
+                      BlocProvider.of<RegCubit>(context).emit(RegInitial());
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(13.0),
+                      padding: const EdgeInsets.all(13.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: button,
                       ),
+                      child:  Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.logout,color: white,size: 20,),
+                            const SizedBox(width: 5,),
+                            Text('تسجيل خروج',style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
+                          ],
+                        ),
                     ),
                   ),
                 ],
@@ -90,46 +91,47 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 40,),
                   _customWidget('الاسم', state.appUser.name,0,state.appUser),
                   _customWidget('البريد الالكترونى', state.appUser.email,1,state.appUser),
-                  Container(
-                    margin: const EdgeInsets.all(13.0),
-                    padding: const EdgeInsets.all(13.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: button,
-                    ),
-                    child: InkWell(
-                      onTap: (){
-
-                      },
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(Icons.arrow_back_ios,color: white,size: 20,),
-                          Text('طلباتى',style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
-                        ],
+                  GestureDetector(
+                    onTap: (){
+                      navigatorKey.currentState.push(MaterialPageRoute(builder: (_) => MyOrdersScreen()));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(13.0),
+                      padding: const EdgeInsets.all(13.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: button,
                       ),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(AntDesign.inbox,color: white,size: 25,),
+                            const SizedBox(width: 8,),
+                            Text('طلباتى',style: TextStyle(color: white,fontSize: 21,fontFamily: 'AA-GALAXY'),)
+                          ],
+                        ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(13.0),
-                    padding: const EdgeInsets.all(13.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: button,
-                    ),
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.pop(context);
-                        BlocProvider.of<AuthCubit>(context).signOut();
-                        BlocProvider.of<UserCubit>(context).emit(UserInitial());
-                        BlocProvider.of<RegCubit>(context).emit(RegInitial());
-                      },
-                      child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.logout,color: white,size: 20,),
-                          const SizedBox(width: 5,),
-                          Text('تسجيل خروج',style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
-                        ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                      BlocProvider.of<AuthCubit>(context).signOut();
+                      BlocProvider.of<UserCubit>(context).emit(UserInitial());
+                      BlocProvider.of<RegCubit>(context).emit(RegInitial());
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(13.0),
+                      padding: const EdgeInsets.all(13.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: button,
                       ),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.logout,color: white,size: 20,),
+                            const SizedBox(width: 5,),
+                            Text('تسجيل خروج',style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
+                          ],
+                        ),
                     ),
                   ),
                 ],
@@ -151,27 +153,27 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _customWidget(String title,String info,int load,AppUser appUser){
-    return Container(
-      margin: const EdgeInsets.all(13.0),
-      padding: const EdgeInsets.all(13.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: button,
-      ),
-      child: InkWell(
-        onTap: (){
-          navigatorKey.currentState.push(MaterialPageRoute(builder: (_) => EditInfoScreen(load: load,title: title,appUser: appUser,)));
-        },
-        child: Row(
-          children: [
-            Icon(Icons.arrow_back_ios,color: white,size: 20,),
-            const SizedBox(width: 10,),
-            Expanded(child: Text(info,style: TextStyle(color: white,fontSize: 17,fontFamily: 'AA-GALAXY'),
-              maxLines: 1,overflow: TextOverflow.ellipsis,)),
-            const Spacer(),
-            Text(title,style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
-          ],
+    return GestureDetector(
+      onTap: (){
+        navigatorKey.currentState.push(MaterialPageRoute(builder: (_) => EditInfoScreen(load: load,title: title,appUser: appUser,)));
+      },
+      child: Container(
+        margin: const EdgeInsets.all(13.0),
+        padding: const EdgeInsets.all(13.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: button,
         ),
+        child: Row(
+            children: [
+              Icon(Icons.arrow_back_ios,color: white,size: 20,),
+              const SizedBox(width: 10,),
+              Expanded(child: Text(info,style: TextStyle(color: white,fontSize: 17,fontFamily: 'AA-GALAXY'),
+                maxLines: 1,overflow: TextOverflow.ellipsis,)),
+              const Spacer(),
+              Text(title,style: TextStyle(color: white,fontSize: 18,fontFamily: 'AA-GALAXY'),)
+            ],
+          ),
       ),
     );
   }

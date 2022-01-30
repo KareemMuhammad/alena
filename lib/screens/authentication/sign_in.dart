@@ -53,13 +53,31 @@ class _SignInAlenaState extends State<SignInAlena> {
       if( state is UserInitial ){
         return initialUi(state);
       }else if( state is UserLoading ){
-        return spinKit;
+        return Column(
+          children: [
+            const SizedBox(height: 80,),
+            CircleAvatar(
+              radius: 55,
+              backgroundColor: button,
+              child: Center(
+                child: Text('علينا',style: TextStyle(fontSize: 50,color: white,
+                    fontFamily: 'AA-GALAXY'),),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: spinKit,
+            ),
+          ],
+        );
       }else if( state is UserLoadError ){
         return failureUi(state);
       }else if(state is UserLoaded){
         return Container();
       }else if(state is UserPasswordReset){
         return initialUi(state);
+      }else{
+        return SizedBox();
       }
   }
 
@@ -84,7 +102,7 @@ class _SignInAlenaState extends State<SignInAlena> {
              child: Column(
                children: [
                  Padding(
-                     padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                     padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                      child: TextFormField(
                        style: TextStyle(color: black,fontSize: 18,),
                        decoration: textInputDecorationSign('البريد الالكترونى',Icons.email),
@@ -96,7 +114,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                      )
                  ),
                  Padding(
-                   padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                   padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                    child: TextFormField(
                      style: TextStyle(color: black,fontSize: 18,),
                      decoration: customDecore('كلمة المرور'),
@@ -135,6 +153,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                minWidth: MediaQuery.of(context).size.width,
                onPressed: () async{
                  if(formKey.currentState.validate()){
+                   await storage.write(key: 'password', value: passwordController.text);
                    BlocProvider.of<UserCubit>(context).signInEmailAndPassword(emailController.text, passwordController.text);
                  }
                },
@@ -222,7 +241,7 @@ class _SignInAlenaState extends State<SignInAlena> {
               child: Column(
                 children: [
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                       child: TextFormField(
                         style: TextStyle(color: black,fontSize: 18,),
                         decoration: textInputDecorationSign('البريد الالكترونى',Icons.email),
@@ -234,7 +253,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                       )
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
                       decoration: customDecore('كلمة المرور'),
@@ -263,7 +282,7 @@ class _SignInAlenaState extends State<SignInAlena> {
           ),
           const SizedBox(height: 30,),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 120,vertical: 1),
+            padding: const EdgeInsets.symmetric(horizontal: 120,vertical: 1),
             child: Material(
               borderRadius: BorderRadius.circular(20.0),
               color: button,
@@ -272,6 +291,7 @@ class _SignInAlenaState extends State<SignInAlena> {
                 minWidth: MediaQuery.of(context).size.width,
                 onPressed: () async{
                   if(formKey.currentState.validate()){
+                    await storage.write(key: 'password', value: passwordController.text);
                     BlocProvider.of<UserCubit>(context).signInEmailAndPassword(emailController.text, passwordController.text);
                   }
                 },

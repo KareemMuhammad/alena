@@ -11,10 +11,12 @@ class Vendors{
   static const String BRAND = "brand";
   static const String PRODUCTS_NO = "productsNo";
   static const String WAITING_NO = "waitingNo";
+  static const String ORDERS_NO = "ordersNo";
+  static const String SELL_NO = "sellNo";
   static const String TOKEN = "token";
   static const String DEVICES = "devices";
-  static const String REGIONS = "regions";
   static const String LOCATIONS = "locations";
+  static const String REGIONS = "regions";
 
   String username;
   String password;
@@ -24,13 +26,13 @@ class Vendors{
   String city;
   String brand;
   String token;
-  int productNo, waitingNo;
+  int productNo, waitingNo, sellNo, ordersNo;
   List<dynamic> contacts;
   List<dynamic> devices;
   List<dynamic> regions;
 
   Vendors({this.username, this.password, this.id,this.logo,this.locations,this.contacts,this.city,this.brand,this.waitingNo,
-    this.productNo,this.token,this.regions,this.devices});
+    this.productNo,this.token,this.devices,this.regions,this.ordersNo,this.sellNo});
 
   Map<String,dynamic> toMap()=>{
     ID : id ?? '',
@@ -46,6 +48,8 @@ class Vendors{
     TOKEN : token ?? '',
     WAITING_NO : waitingNo ?? 0,
     PRODUCTS_NO : productNo ?? 0,
+    ORDERS_NO : ordersNo ?? 0,
+    SELL_NO : sellNo ?? 0,
   };
 
   Vendors.fromSnapshot(DocumentSnapshot doc){
@@ -53,15 +57,17 @@ class Vendors{
     username = (doc.data() as Map)[USER_NAME] ?? '';
     logo = (doc.data() as Map)[LOGO] ?? '';
     password = (doc.data() as Map)[PASSWORD] ?? '';
-    locations = locationsList((doc.data() as Map)[LOCATIONS] ?? []);
-    contacts = (doc.data() as Map)[CONTACTS] ?? [];
+    locations = locationsList((doc.data() as Map)[LOCATIONS]) ?? [];
     regions = (doc.data() as Map)[REGIONS] ?? [];
+    contacts = (doc.data() as Map)[CONTACTS] ?? [];
     devices = (doc.data() as Map)[DEVICES] ?? [];
     city = (doc.data() as Map)[CITY] ?? '';
     brand = (doc.data() as Map)[BRAND] ?? '';
     token = (doc.data() as Map)[TOKEN] ?? '';
     waitingNo = (doc.data() as Map)[WAITING_NO] ?? 0;
     productNo = (doc.data() as Map)[PRODUCTS_NO] ?? 0;
+    ordersNo = (doc.data() as Map)[ORDERS_NO] ?? 0;
+    sellNo = (doc.data() as Map)[SELL_NO] ?? 0;
   }
 
   Vendors.fromMap(Map<String,dynamic> map){

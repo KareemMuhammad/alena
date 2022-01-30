@@ -78,7 +78,7 @@ class ProductWidget extends StatelessWidget {
                     if(state is UserLoaded){
                       return Positioned(
                         child: CircleAvatar(
-                          radius: 25,
+                          radius: 20,
                           backgroundColor: white,
                           child: IconButton(
                             onPressed: (){
@@ -91,7 +91,7 @@ class ProductWidget extends StatelessWidget {
                             },
                             icon: Icon(state.appUser.favorites.contains(product.id)? Icons.favorite : Icons.favorite_border),
                             color: state.appUser.favorites.contains(product.id)? button : black,
-                            iconSize: 28,
+                            iconSize: 23,
                           ),
                         ),
                         top: 10,
@@ -100,7 +100,7 @@ class ProductWidget extends StatelessWidget {
                     }else{
                       return Positioned(
                         child: CircleAvatar(
-                          radius: 25,
+                          radius: 20,
                           backgroundColor: white,
                           child: IconButton(
                             onPressed: (){
@@ -113,7 +113,7 @@ class ProductWidget extends StatelessWidget {
                             },
                             icon: Icon(appUser.favorites.contains(product.id)? Icons.favorite : Icons.favorite_border),
                             color: appUser.favorites.contains(product.id)? button : black,
-                            iconSize: 28,
+                            iconSize: 23,
                           ),
                         ),
                         top: 10,
@@ -192,7 +192,7 @@ class ProductWidget extends StatelessWidget {
     showModalBottomSheet(context: context, builder: (_){
       return Wrap(
         children: [
-          new OrderSheet(),
+          new OrderSheet(product: product,),
         ],
       );
     },

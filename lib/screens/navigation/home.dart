@@ -4,8 +4,8 @@ import 'package:alena/models/user.dart';
 import 'package:alena/screens/categories/main_categories.dart';
 import 'package:alena/screens/navigation/bar/favorites_screen.dart';
 import 'package:alena/utils/constants.dart';
-import 'package:alena/widgets/helpers/categories_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'bar/devices_screen.dart';
 import 'bar/profile_screen.dart';
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: ListTile(
-                      leading: Icon(Icons.person,size: 25,color: button,),
+                      leading: Icon(Icons.person_outline,size: 25,color: button,),
                       title: Text('الملف الشخصى', style: TextStyle(
                           fontSize: 20,
                           color: button,
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: ListTile(
-                      leading: Icon(Icons.widgets,size: 25,color: button,),
+                      leading: Icon(AntDesign.database,size: 25,color: button,),
                       title: Text('جهازى', style: TextStyle(
                           fontSize: 20,
                           color: button,
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: ListTile(
-                      leading: Icon(Icons.favorite,size: 25,color: button,),
+                      leading: Icon(Icons.favorite_border,size: 25,color: button,),
                       title: Text('الأجهزة المفضلة', style: TextStyle(
                           fontSize: 20,
                           color: button,
@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: ListTile(
-                      leading: Icon(Icons.all_inclusive,color: button,size: 25,),
+                      leading: Icon(Icons.widgets_outlined,color: button,size: 25,),
                       title: Text('الترشيحات', style: TextStyle(
                           fontSize: 20,
                           color: button,

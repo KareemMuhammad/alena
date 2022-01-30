@@ -88,6 +88,30 @@ InputDecoration textInputDecorationSign(String hintText,IconData iconData){
   );
 }
 
+InputDecoration textInputDecorationOrder(String hintText,IconData iconData){
+  return InputDecoration(
+    filled: true,
+    fillColor: white,
+    hintTextDirection: TextDirection.rtl,
+    hintText: hintText,
+    hintStyle: TextStyle(fontSize: 16,color: button,fontFamily: 'AA-GALAXY'),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+    ),
+    errorStyle: TextStyle(color: button,fontSize: 16),
+    contentPadding: EdgeInsets.all(8),
+    prefixIcon: Icon(iconData,size: 20,color: container,),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[700], width: 2.0),
+        borderRadius: BorderRadius.circular(20)
+    ),
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey[700], width: 2.0),
+        borderRadius: BorderRadius.circular(20)
+    ),
+  );
+}
+
 InputDecoration textInputDecoration2(String hint) => InputDecoration(
   fillColor: white,
   filled: true,

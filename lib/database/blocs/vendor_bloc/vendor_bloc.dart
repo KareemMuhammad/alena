@@ -46,6 +46,15 @@ class VendorCubit extends Cubit<VendorState>{
     }
   }
 
+  Future updateVendorOrderNo(int no,String vendorId)async{
+    try {
+      await vendorRepo.updateOrdersOfVendorNumber(vendorId,no);
+    }catch(e){
+      emit(VendorLoadError());
+      print(e.toString());
+    }
+  }
+
   Future getVendor(String id)async{
     try{
       emit(VendorLoading());

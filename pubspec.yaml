@@ -61,6 +61,7 @@ dependencies:
   another_flushbar: ^1.10.26
   http: ^0.13.3
   geocoder: ^0.2.1
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

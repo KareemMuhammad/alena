@@ -1,6 +1,7 @@
 import 'package:alena/database/blocs/user_bloc/user_state.dart';
 import 'package:alena/database/repositories/user_repository.dart';
 import 'package:alena/models/user.dart';
+import 'package:alena/utils/shared.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -73,7 +74,6 @@ class UserCubit extends Cubit<UserState>{
         if (newUser == true) {
           AppUser appUser = AppUser(id: user.uid,
               email: data[AppUser.EMAIL] ?? '',
-              password: '',
               name: data[AppUser.FULL_NAME] ?? '',
               gender: data["user_gender"] ?? '',
               token: '',
@@ -116,7 +116,6 @@ class UserCubit extends Cubit<UserState>{
         if (newUser == true) {
           AppUser appUser = AppUser(id: user.uid,
               email: user.email ?? '',
-              password: '',
               name: user.displayName ?? '',
               gender: '',
               doneList: [],
@@ -228,9 +227,10 @@ class UserCubit extends Cubit<UserState>{
 
   Future updateEmail(String email)async{
     try {
+      String value = await storage.read(key: 'password');
       _fireUser = await userRepository.getCurrentUser();
       _user = await userRepository.getUserById(_fireUser.uid);
-      var credential = EmailAuthProvider.credential(email: _fireUser.email, password: _user.password);
+      var credential = EmailAuthProvider.credential(email: _fireUser.email, password: value);
       await _fireUser.reauthenticateWithCredential(credential);
       await _auth.currentUser.updateEmail(email);
       await userRepository.updateUserEmail(email, _auth.currentUser.uid);

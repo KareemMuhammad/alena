@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:alena/database/blocs/user_bloc/user_cubit.dart';
+import 'package:alena/models/notification_model.dart';
 import 'package:alena/models/user.dart';
 import 'package:alena/screens/navigation/wrapper_screen.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:uuid/uuid.dart';
+import '../main.dart';
 import 'shared.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -68,6 +70,8 @@ class Utils{
 
   static const String SHOWCASE_KEY = "showcaseKey";
 
+  static const String APP_ICON = "https://firebasestorage.googleapis.com/v0/b/alena-ed5f1.appspot.com/o/app_icon2.jpg?alt=media&token=b0bb438d-54bc-4827-8b2e-67db5fefe7ae";
+
   static const String SHARED_SELECTED_CATEGORIES_KEY = "selectedCategoriesKey";
 
   static const String SHARED_SELECTED_INDEXES_KEY = "selectedIndexesKey";
@@ -77,6 +81,8 @@ class Utils{
   static const List<String> SUB_CATEGORIES_IMAGES = ['assets/sub/furniture2.jpg','assets/sub/electric2.jpg','assets/sub/mafroshat2.jpg','assets/sub/kitchen2.jpg','assets/sub/accessories2.jpg','assets/sub/plastics2.jpg','assets/sub/cleaning2.jpg','assets/sub/personal2.jpg','assets/sub/clothes2.jpg','assets/main/house.jpg'];
 
   static FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  static const String FCM_URL = 'https://fcm.googleapis.com/fcm/send';
 
   static AppUser getCurrentUser(BuildContext context){
     final AppUser currentUser = BlocProvider.of<UserCubit>(context).getUser;
@@ -215,6 +221,44 @@ class Utils{
 
     await _flutterLocalNotificationsPlugin.schedule(Random().nextInt(100000), title,
         'علينا', DateTime.now().add(Duration(seconds: 1)),platform);
+  }
+
+  static Future<void> sendPushMessage(NotificationModel model,String token) async {
+    var client = http.Client();
+    if (token == null) {
+      print('Unable to send FCM message, no token exists.');
+      return;
+    }
+    try {
+      await client.post(
+        Uri.parse(FCM_URL),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'key=${remoteConfigService.getKey}',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              NotificationModel.BODY: '${model.body}',
+              NotificationModel.TITLE: '${model.title}',
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              NotificationModel.BODY: '${model.body}',
+              NotificationModel.TITLE: '${model.title}',
+              'status': 'done',
+              NotificationModel.ICON : '${model.icon}',
+              NotificationModel.NOT_ID : '${Uuid().v1()}'
+            },
+            'to': token,
+          },
+        ),
+      );
+      print('FCM request for device sent!');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
 }

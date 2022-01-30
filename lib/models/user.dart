@@ -16,7 +16,6 @@ class AppUser{
    String id;
    String name;
    String email;
-   String password;
    String gender;
    String weddingDate;
    String token;
@@ -28,7 +27,6 @@ class AppUser{
       this.id,
       this.name,
       this.email,
-      this.password,
       this.gender,
       this.weddingDate,
       this.token,
@@ -40,7 +38,6 @@ class AppUser{
     ID : id ??'',
     FULL_NAME : name ??'',
     EMAIL : email ??'',
-    PASSWORD : password ??'',
     GENDER : gender ??'',
     TOKEN : token ?? '',
     WEDDING_DATE : weddingDate ?? '',
@@ -53,13 +50,24 @@ class AppUser{
     id = (doc.data() as Map)[ID] ?? '';
     name = (doc.data() as Map)[FULL_NAME] ?? '';
     email = (doc.data() as Map)[EMAIL] ?? '';
-    password = (doc.data() as Map)[PASSWORD] ?? '';
     gender = (doc.data() as Map)[GENDER] ?? '';
     token = (doc.data() as Map)[TOKEN] ?? '';
     weddingDate = (doc.data() as Map)[WEDDING_DATE] ?? '';
     doneList = (doc.data() as Map)[DONE_LIST] ?? [];
     additionalList = (doc.data() as Map)[ADDITIONAL_LIST] ?? [];
     favorites = (doc.data() as Map)[FAVORITES_LIST] ?? [];
+  }
+
+  AppUser.fromMap(Map<String,dynamic> map){
+    id = map[ID] ?? '';
+    name = map[FULL_NAME] ?? '';
+    email = map[EMAIL] ?? '';
+    gender = map[GENDER] ?? '';
+    token = map[TOKEN] ?? '';
+    weddingDate = map[WEDDING_DATE] ?? '';
+    doneList = map[DONE_LIST] ?? [];
+    additionalList = map[ADDITIONAL_LIST] ?? [];
+    favorites = map[FAVORITES_LIST] ?? [];
   }
 
 }

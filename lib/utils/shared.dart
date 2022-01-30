@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class SizeConfig {
@@ -42,3 +43,5 @@ const String ADDITIONAL_MENUS_COLLECTION = "Additional Menus";
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
 const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 const APP_LINK = "https://play.google.com/store/apps/details?id=com.outofthebox.alena";
+
+final storage = new FlutterSecureStorage();

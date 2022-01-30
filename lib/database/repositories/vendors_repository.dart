@@ -22,9 +22,11 @@ class VendorsRepository{
   }).toList();
  }
 
+ Future updateOrdersOfVendorNumber(String id,int no)async{
+  await _adminsCollection.doc(id).update({Vendors.ORDERS_NO: FieldValue.increment(no)});
+ }
+
  Future<List<Vendors>> queryVendorsOfProduct(String category)async{
-   final allQuery = _adminsCollection.where(Vendors.DEVICES,arrayContains: category).where(Vendors.CITY,isEqualTo: category)
-       .where(Vendors.LOCATIONS,arrayContains: category);
   QuerySnapshot snapshot = await _adminsCollection.where(Vendors.DEVICES,arrayContains: category).get()
       .catchError((e) {
    print(e.toString());

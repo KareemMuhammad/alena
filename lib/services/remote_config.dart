@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 const String _ANDROID_VALUE = "requiredBuildNumberAndroid";
 const String _IOS_VALUE = "requiredBuildNumberIOS";
+const String _KEY = "serverKey";
 
 class RemoteConfigService {
   final RemoteConfig _remoteConfig;
@@ -13,7 +14,8 @@ class RemoteConfigService {
 
   final defaults = <String, dynamic>{
     _ANDROID_VALUE: 1,
-    _IOS_VALUE: 1
+    _IOS_VALUE: 1,
+    _KEY: 1,
   };
 
   static RemoteConfigService _instance;
@@ -44,6 +46,8 @@ class RemoteConfigService {
     ));
     await _remoteConfig.fetchAndActivate();
   }
+
+  String get getKey => _remoteConfig.getString(_KEY);
 
   bool checkUpdates() {
     final requiredBuildNumber = _remoteConfig.getString(Platform.isAndroid ? _ANDROID_VALUE : _IOS_VALUE);

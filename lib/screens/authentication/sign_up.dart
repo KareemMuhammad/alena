@@ -63,7 +63,23 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                 if( state is RegInitial ){
                   return initialUi(state);
                 }else if( state is RegLoading ){
-                  return spinKit;
+                  return Column(
+                    children: [
+                      const SizedBox(height: 80,),
+                      CircleAvatar(
+                        radius: 55,
+                        backgroundColor: button,
+                        child: Center(
+                          child: Text('علينا',style: TextStyle(fontSize: 50,color: white,
+                              fontFamily: 'AA-GALAXY'),),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: spinKit,
+                      ),
+                    ],
+                  );
                 }else if( state is RegLoadError ){
                   return failureUi(state);
                 }else {
@@ -87,7 +103,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
               child: Column(
                 children: [
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                       child: TextFormField(
                         style: TextStyle(color: black,fontSize: 18,),
                         decoration: textInputDecorationSign('البريد الالكترونى',Icons.email),
@@ -99,7 +115,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                       )
                   ),
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                       child: TextFormField(
                         style: TextStyle(color: black,fontSize: 18,),
                         textDirection: Utils.isRTL(_name.isNotEmpty ? _name : nameController.text) ? TextDirection.rtl : TextDirection.ltr,
@@ -116,7 +132,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                       )
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
                       decoration: customDecore('كلمة المرور'),
@@ -128,7 +144,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18,vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 10),
                     child: TextFormField(
                       style: TextStyle(color: black,fontSize: 18,),
                       decoration: customDecore('تأكيد كلمة المرور'),
@@ -145,7 +161,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
           ),
           const SizedBox(height: 30,),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30,vertical: 1),
+            padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 1),
             child: Material(
               borderRadius: BorderRadius.circular(10.0),
               color: button,
@@ -154,6 +170,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                 minWidth: MediaQuery.of(context).size.width,
                 onPressed: () async{
                   if(formKey.currentState.validate()) {
+                    await storage.write(key: 'password', value: passwordController.text);
                     BlocProvider.of<RegCubit>(context).signUpUserWithEmailPass(
                         emailController.text, passwordController.text,'',nameController.text);
                   }
@@ -262,6 +279,7 @@ class _SignUpAlenaState extends State<SignUpAlena> {
                 minWidth: MediaQuery.of(context).size.width,
                 onPressed: () async{
                   if(formKey.currentState.validate()) {
+                    await storage.write(key: 'password', value: passwordController.text);
                     BlocProvider.of<RegCubit>(context).signUpUserWithEmailPass(
                         emailController.text, passwordController.text,'',nameController.text);
                   }
